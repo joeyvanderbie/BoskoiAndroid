@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  
+  Copyright (c) 2010 Boskoi
+  All rights reserved
+  Contact: developer@boskoi.org
+  Developers: Joey van der Bie, Maarten van der Mark and Vincent Vijn
+  Website: http://www.boskoi.org
+  
+  GNU Lesser General Public License Usage
+  This file may be used under the terms of the GNU Lesser
+  General Public License version 3 as published by the Free Software
+  Foundation and appearing in the file LICENSE.LGPL included in the
+  packaging of this file. Please review the following information to
+  ensure the GNU Lesser General Public License version 3 requirements
+  will be met: http://www.gnu.org/licenses/lgpl.html.	
+ 	
+ 
+  If you have questions regarding the use of this file, please contact
+  Boskoi developers at developer@boskoi.org.
+ -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="wrap_content" 
+	android:layout_height="wrap_content"
+	android:orientation="vertical" 
+	android:background="@drawable/balloon_overlay_bg_selector" 
+	android:id="@+id/balloon_main_layout">
+<RelativeLayout
+android:orientation="horizontal"
+android:layout_width="fill_parent" 
+		android:layout_height="wrap_content" 
+		android:layout_marginLeft="5px"
+		android:id="@+id/balloon_inner_layout">
+	<LinearLayout 
+		android:layout_width="wrap_content" 
+		android:layout_height="wrap_content"
+		android:orientation="vertical" android:paddingTop="5px">
+		<TextView android:layout_height="wrap_content"
+			android:layout_width="fill_parent" 
+			android:id="@+id/balloon_item_title"
+			android:text="balloon_item_title" 
+			android:textSize="16dip"
+			android:textColor="#000000" />
+		<TextView android:layout_height="wrap_content"
+			android:layout_width="fill_parent" 
+			android:id="@+id/balloon_item_snippet"
+			android:text="balloon_item_snippet"
+			android:textColor="#000000" 
+			android:textSize="12dip" />
+		</LinearLayout>
+		<ImageView android:layout_width="wrap_content"
+		android:layout_height="wrap_content" 
+		android:src="@drawable/balloon_overlay_close"
+		android:id="@+id/close_img_button" 
+		android:paddingLeft="5dip"
+		android:paddingBottom="5dip" 
+		android:layout_alignParentRight="true"></ImageView>
+			</RelativeLayout>
+			<LinearLayout android:orientation="horizontal"
+				android:layout_height="wrap_content" android:layout_width="wrap_content" android:paddingTop="5px">
+				<Button android:id="@+id/btn_details"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+  					android:textStyle="bold"
+					android:text="@string/btn_details" 
+					android:layout_alignParentLeft="true"/>						
+				  <Button android:id="@+id/btn_zoom"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+  					android:textStyle="bold"
+					android:text="@string/btn_zoom"/>
+				  <Button android:id="@+id/btn_navigate"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+  					android:textStyle="bold"
+					android:text="@string/btn_navigate" />
+				</LinearLayout>
+</LinearLayout>

@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  
+  Copyright (c) 2010 Boskoi
+  All rights reserved
+  Contact: developer@boskoi.org
+  Developers: Joey van der Bie, Maarten van der Mark and Vincent Vijn
+  Website: http://www.boskoi.org
+  
+  GNU Lesser General Public License Usage
+  This file may be used under the terms of the GNU Lesser
+  General Public License version 3 as published by the Free Software
+  Foundation and appearing in the file LICENSE.LGPL included in the
+  packaging of this file. Please review the following information to
+  ensure the GNU Lesser General Public License version 3 requirements
+  will be met: http://www.gnu.org/licenses/lgpl.html.	
+ 	
+ 
+  If you have questions regarding the use of this file, please contact
+  Boskoi developers at developer@boskoi.org.
+ -->
+<resources>
+    
+    <!-- Titles -->
+    <string name="title">Boskoi Logo here</string>
+    <string name="add_incident">Boskoi | Add Report</string>
+    <string name="view_incident">Boskoi | View Reports</string>
+    <string name="incident_details">Boskoi | Report Detail</string>
+    <string name="app_settings">Boskoi | Settings </string>
+    <string name="boskoi_about">Boskoi | About </string>
+    <string name="boskoi_find">Boskoi | Find </string>
+    <string name="boskoi_sync">Boskoi | Synchronize </string>
+    <string name="boskoi_splash_screen">Boskoi | Splash Screen"</string>
+	<string name="menu_home">Home</string>
+	<string name="menu_sync">Sync</string>
+	<string name="boskoi_map">Kaart</string>
+	<string name="boskoi_list">Lijst</string>
+	<string name="boskoi_report">Meld</string>
+
+    <string name="app_name">Boskoi</string>
+	<string name="reports">Boskoi</string>
+	
+	<!-- Strings -->
+    <string name="date_time">Event Title</string>
+    <string name="prompt_mesg">Kies een soort om te filteren</string>
+    <string name="str_post_photos">Foto toevoegen</string>
+    <string name="add_categories">Choose edible(s)</string>
+    <string name="choose_method">Selecteer methode</string>
+    <string name="choose_pictures_method">Selecteer hoe u de foto wil toevoegen</string>
+    <string name="preferences_notifications">Notifications</string>
+    <string name="new_incidents">{0} New reports </string>
+	<string name="new_categories">{0} New edibles </string>
+	<string name="incident_date_change">Datum Aanpassen</string>
+	<string name="incident_date">Datum</string>
+	<string name="incident_current_date">augustus 23, 2010</string>
+	<string name="incident_time">at 09:34 PM</string>
+	<string name="incident_verified">Geverifieerd</string>
+	<string name="incident_unverified">Ongeverifieerd</string>
+	<string name="incident_location">Locatie</string>
+	<string name="incident_description">Omschrijving</string>
+	<string name="incident_title">Titel</string>
+	<string name="incident_category">Soorten</string>
+	<string name="incident_add_category">Selecteer soort</string>
+	<string name="incident_photo">Foto\'s</string>
+	<string name="optional">Optioneel</string>	
+	<string name="notification_title">Boskoi background service</string>
+    
+	<!-- Buttons -->
+	<string name="incident_menu_map">View Map</string>
+	<string name="incident_menu_refresh">Ververs</string>
+    <string name="btn_country">Default location</string>
+    <string name="btn_confirm">Opslaan</string>
+    <string name="btn_zoom">Zoom</string>
+    <string name="btn_details">Details</string>
+    <string name="btn_navigate">Navigeer naar</string>
+    <string name="btn_gallery">Gallery</string>
+    <string name="btn_camera">Camera</string>
+    <string name="btn_save">Opslaan</string>
+    <string name="btn_back">Terug</string>
+    <string name="btn_find">Vind mij</string>
+    <string name="btn_reset">Reset</string>
+    <string name="btn_ok">Ok</string>
+    <string name="btn_add_photo">Foto toevoegen</string>
+    <string name="btn_cancel">Anuleer</string>
+    <string name="btn_send">Verstuur</string>
+    <string name="add_location">Locatie toevoegen</string>
+	<string name="view_map">Toon op kaart</string>
+	<string name="txt_about_btn">About</string>
+	<string name="incident_filter_category">Gefiltered op: </string>
+	<string name="incident_menu_add">Maak Melding</string>
+	<string name="incident_menu_satelite">Sateliet/Kaart-modus</string>
+	<string name="incident_list">Bekijk Meldingen</string>
+	
+    <!-- Toasts -->
+    <!-- <string name="toast_photos">Photo added</string>
+    <string name="invalid_email_address">An invalid email address was entered</string>
+    <string name="invalid_boskoi_instance">Looks like the URL entered is not a Boskoi or Ushahidi instance</string>
+    <string name="sms_to_boskoi_failed">Failed to post SMS to Boskoi. Make sure username and password are correct</string>-->
+	<string name="instructions">Markeer de gewenste locatie, door de map aan te raken.</string>
+	<!-- <string name="hint_sms_send">This means all incoming sms will be pushed to Boskoi</string>
+	<string name="hint_auto_fetch">Boskoi will automatically download new reports.</string>
+	<string name="hint_auto_update_delay">Set how often Boskoi syncronizes with the selected instance.</string>-->
+		<!--  Add location screen -->
+	<string name="find_location">Zoekt uw locatie</string>
+	<string name="found_location">Locatie gevonden</string>
+	<string name="location_not_found">A location can not currently be determined. Enable more location sources i.e. GPS Satellites in Security and Location Settings.</string>
+	<string name="loc_not_found">Your location could not be determined. Make sure you have pin point the exact location on the map.</string>
+	<string name="no_reports_found">Geen meldingen gevonden</string>
+	<string name="retrieving_reports">Nieuwe meldingen ophalen</string>
+	<string name="retrieved_reports">Nieuwe meldingen opgehaald</string>
+		<!-- Add Report Screen -->
+	<string name="report_successfully_added_online">De melding online geplaatst en wacht op goedkeuring.</string>
+	<!-- <string name="report_successfully_added_offline">Report sent to local storage due to 
+		unvailability of internet. Remember to sync to the online 
+		instance when there there is internet connection.</string>
+	<string name="failed_to_add_report_offline">Failed to send report.Check to see if you filled all required fields.</string>
+	<string name="failed_to_add_report_online">Connection failure, cannot submit your report.</string>
+	<string name="empty_report_title">Enter a title for the incident</string>
+	<string name="empty_report_description">Enter a description for the incident</string>
+	<string name="empty_report_location">The location description must be at least 3 characters long</string>
+	<string name="empty_report_categories">Select at least one edible type</string>
+	<string name="not_enough_first_name">A first name must be at least 3 characters long</string>
+	<string name="not_enough_last_name">A last name must be at least 3 characters long</string>
+	<string name="report_not_found_for_category">No reports for this edible found</string>-->
+	<string name="hint_location">Locatie omschrijving</string>
+	<!-- <string name="internet_connection">Network error, please ensure you are connected to the internet</string>
+		-->
+    <!-- Alert -->
+    <!-- <string name="alert_dialog_ok">OK</string>
+    <string name="alert_dialog_hide">Hide</string>
+    <string name="alert_dialog_something">Something</string>
+    <string name="alert_dialog_cancel">Cancel</string>
+    <string name="alert_dialog_error_title">Oops</string>
+    <string name="alert_dialog_error_msg">An error occurred fetching the reports. Make sure you entered an Ushahidi instance.</string>
+    -->
+    	<!--  Blog screen -->
+	<string name="menu_blog">Nieuws</string>
+	<string name="blog_error">Ophalen van nieuws mislukt.</string>
+	
+	<!--  Settings -->
+	<!--  <string name="menu_settings">Settings</string>
+	<string name ="basic_settings">Basic settings</string>
+	<string name="advanced_settings">Advanced settings</string>
+	<string name="hint_advanced_settings">For more advanced settings</string>
+	<string name="sms_settings">SMS settings</string>
+	<string name="txt_clear_cache">Clear cache</string>
+	<string name="txt_confirm_clear_cache">Are you sure you want to clear the cache?</string>
+	<string name="option_location">Default folder</string>
+	<string name="hint_clear_cache">Clear all stored data</string>
+    <string name="hint_option_location">The location where you want to store items saved from the selected instance.</string>
+	<string name="hint_SD_save_path">Type a folder name</string>
+	<string name="bg_notification">Background notifications</string>
+	<string name="vibrate">Vibrate</string>
+	<string name="hint_vibrate">Will cause phone to vibrate</string>
+	<string name="ringtone">Ringtone</string>
+	<string name="hint_ringtone">Play a ringtone</string>
+	<string name="select_ringtone">Select ringtone</string>
+	<string name="hint_select_ringtone">Change which ringtone to use</string>
+	<string name="flash_led">Flashing led</string>
+	<string name="hint_flash_led">Cause phones LED to flash</string>
+	<string name="hint_domain">Select the Boskoi instance that you wish to interact with.</string>
+	<string name="chk_auto_fetch">Auto sync</string>
+	<string name="chk_sms_send">Send SMS to Boskoi</string>
+	<string name="txt_auto_update_delay">Auto sync frequency</string>
+	<string name="txt_path_SD">Path on SD:</string>
+	<string name="txt_cache">Cache files:</string>
+	<string name="txt_countries">Select a default country</string>
+	<string name="txt_domain">Choose your website</string>
+	<string name="txt_first_name">Voornaam</string>
+	<string name="hint_first_name">For attribution when submitting a report (optional).</string>
+	<string name="txt_last_name">Achternaam</string>
+	<string name="hint_last_name">Also for attribution when submitting a report (optional).</string>
+	<string name="txt_user_name">Username</string>
+	<string name="hint_user_name">Your Boskoi username</string>
+	<string name="txt_password">Password</string>
+	<string name="hint_password">Your Boskoi password</string>
+	<string name="txt_email">E-mail adres</string>
+	<string name="hint_email">For contact purposes only</string>
+	<string name="total_reports">Number of reports</string>
+	<string name="hint_camera">Touch screen to take picture</string>
+	<string name="hint_total_reports">The total number of reports to fetch from the selected instance.</string>
+	-->
+	<!--  About screen -->
+	<string name="version_name_lbl">Version </string>
+	<string name="menu_about">Over</string>
+<!-- 	<string name="boskoi_url">more about FoAM</string>
+	<string name="welcome_mgs">A mobile phone guide to edible urban wild-food sources, combining the ancient skills of foragers with current open source media. 
+	\n\nThis pilot-project is initiated by FoAm (http://www.fo.am),\nsupported by het Prins Bernhard cultuurfonds (http://www.prinsbernhardcultuurfonds.nl)\nand developed by \nJoey van der Bie (http://www.vanderBie.net), \nMaarten van der Mark (http://www.vdmark.info) and \nVincent Vijn (http://www.vijn.me)
+	</string>
+	-->
+	<!-- Eula -->
+  <!--   <string name="eulaBtn">Show rules</string>
+   <string name="eula_title">Boskoi Terms of use</string>
+   <string name="eula_accept">Accept</string>
+   <string name="eula_refuse">Refuse</string>
+   <string name="eula">For using the application we urge you to follow these rules:\n
+		\n
+		1. Be friendly.\n 
+		Ask permission when ownership is unclear.\n
+		\n
+		2. Be generous\n
+		How much do you really need? Only pick what you will eat. Leave most for others (or wildlife).\n
+		\n
+		3. Be alert\n
+		Be ware of toxicity and don\'t tread on other plants when picking.\n
+		\n
+		4. Be careful\n
+		Don\'t put any rare or protected species on the map.\n
+		\n
+		Thank you for taking the time to read our rules, now enjoy the fruits of the world!
+	</string>
+	<string name="lgplBtn">Show licence information</string>
+	<string name="lgpl">Licensing\n\n
+		Boskoi is an Open Source platform based on Ushahidi (<a href="http://www.ushahidi.com">http://www.ushahidi.com</a>)\n\n
+		Boskoi is licensed under the LGPL v3 license (<a href="http://www.gnu.org/licenses/lgpl.html">http://www.gnu.org/licenses/lgpl.html</a>)\n\n
+		More information on <a href="http://www.boskoi.org/open">http://www.boskoi.org/open</a>
+	</string>
+	<string name="privacyBtn">Show privacy information</string>
+	<string name="privacy">Privacy\n\n
+For improving our application we log user behavior using Google Analytics.\n\n
+This logging is stored on the Google Analytics server and is used privately, we do not share this information with other parties! The Google Analytics usage license can be found on: \n <a href="http://www.google.com/intl/en_uk/analytics/tos.html">http://www.google.com/intl/en_uk/analytics/tos.html</a>\n\n
+You should note that the analytics currently can not be turned off. If you do not want us to log your behavior please inform us and we will supply you with a version which does not log your behavior.</string>
+	
+-->
+<string name="blogShareText">Boskoi, Urban Edibles artikel: </string>
+<string name="loadingBlog">Nieuws artikelen laden</string>
+	<string name="blogShareTextInteresting">Interessant</string>
+	<string name="shareBtn">Deel artikel</string>
+</resources>

@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  
+  Copyright (c) 2010 Boskoi
+  All rights reserved
+  Contact: developer@boskoi.org
+  Developers: Joey van der Bie, Maarten van der Mark and Vincent Vijn
+  Website: http://www.boskoi.org
+  
+  GNU Lesser General Public License Usage
+  This file may be used under the terms of the GNU Lesser
+  General Public License version 3 as published by the Free Software
+  Foundation and appearing in the file LICENSE.LGPL included in the
+  packaging of this file. Please review the following information to
+  ensure the GNU Lesser General Public License version 3 requirements
+  will be met: http://www.gnu.org/licenses/lgpl.html.	
+ 	
+ 
+  If you have questions regarding the use of this file, please contact
+  Boskoi developers at developer@boskoi.org.
+ -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" 
+	android:layout_height="fill_parent"
+	android:orientation="vertical"
+	android:background="@drawable/background_color" >
+	<ScrollView 
+		android:layout_width="fill_parent" 
+		android:layout_height="fill_parent"
+		android:paddingBottom="5px" android:paddingLeft="5px" android:paddingTop="5px">
+	  <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" 
+	android:layout_height="fill_parent"
+	android:orientation="vertical"
+	android:background="@drawable/background_color" >
+	    <!-- Parent layout starts -->
+    <TableLayout android:id="@+id/top_items"
+    	android:layout_width="fill_parent"
+    	android:layout_height="wrap_content"
+    	android:stretchColumns="0"
+    	android:paddingTop="8px"              
+    	android:paddingBottom="7px"          
+    	android:paddingLeft="7px"
+    	android:paddingRight="9px">
+    <TableRow 
+    	android:layout_width="wrap_content"
+    	android:layout_height="wrap_content">
+    <LinearLayout android:id="@+id/top_items_layout"
+    	android:layout_width="fill_parent"
+    	android:layout_height="wrap_content"
+    	android:orientation="vertical">    
+		<TextView      
+        	android:id="@+id/title"
+        	android:singleLine="false"       
+        	android:layout_width="fill_parent"
+        	android:layout_height="wrap_content"/>
+  		<TextView
+        	android:id="@+id/category"
+        	android:singleLine="false"                          
+        	android:layout_width="fill_parent"
+        	android:layout_height="wrap_content"/>                    
+    	<TextView  
+			android:id="@+id/location"
+			android:singleLine="false"
+	   		android:layout_width="fill_parent" 
+	   		android:layout_height="wrap_content"/>
+	    
+		<TextView  
+			android:id="@+id/date"
+			android:singleLine="false"
+	   		android:layout_width="fill_parent" 
+	   		android:layout_height="wrap_content"/>
+	    	
+		<TextView  
+			android:id="@+id/status"
+			android:singleLine="false"
+	   		android:layout_width="wrap_content" 
+	   		android:layout_height="wrap_content"/>
+	</LinearLayout>
+		
+    </TableRow>	
+    </TableLayout>
+	
+    <!-- Main content area. -->
+	<ScrollView android:id="@+id/description" 
+   		android:layout_width="fill_parent" 
+		android:layout_height="wrap_content"
+		android:paddingTop="5px"    
+    	android:paddingLeft="10px"
+    	android:paddingRight="10px"    
+    	android:fadingEdge="none"
+		android:layout_below="@id/top_items">
+   		<TextView
+       		android:id="@+id/webview"
+       		android:singleLine="false"
+    		android:layout_width="fill_parent" 
+    		android:layout_height="wrap_content"
+    		android:autoLink="all"    
+    		android:fadingEdge="none"/>
+	</ScrollView>
+	  <LinearLayout
+    		android:orientation="horizontal"
+    		android:layout_width="fill_parent"
+    		android:layout_height="wrap_content"
+    		android:paddingTop="5px"
+    		android:paddingLeft="7px"> 
+    		<TextView  
+			android:id="@+id/wikilink"
+			android:singleLine="false"
+	   		android:layout_width="wrap_content" 
+	   		android:layout_height="wrap_content"/>
+
+		</LinearLayout>
+	<LinearLayout
+    	android:orientation="vertical"
+    	android:layout_width="fill_parent"
+    	android:layout_height="wrap_content"
+    	android:layout_alignParentBottom="true"    
+    	android:paddingBottom="5px"    	    
+    	android:paddingLeft="7px"
+    	android:paddingRight="9px"
+    	android:paddingTop="5px">    
+   		<LinearLayout
+    		android:orientation="horizontal"
+    		android:layout_width="wrap_content"
+    		android:layout_height="wrap_content"
+    		android:paddingBottom="5px" >
+
+			<Gallery 
+				android:id="@+id/gallery"
+				android:layout_below="@id/description"
+				android:layout_width="fill_parent"
+				android:layout_height="fill_parent"/>
+		</LinearLayout>
+	</LinearLayout>
+<!-- Buttons layout starts.  -->
+			<RelativeLayout android:orientation="horizontal"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content">
+       		
+				<Button android:id="@+id/btn_back"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_alignParentRight="true"
+  					android:textStyle="bold"
+					android:text="@string/btn_back" android:layout_marginRight="5px"/>
+	
+		      	<Button android:id="@+id/view_map"
+    				android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+ 					android:layout_toLeftOf="@id/btn_back"
+  					android:layout_alignTop="@id/btn_back"
+  					android:textStyle="bold"
+       				android:text="@string/view_map" />
+       				
+       			<Button android:id="@+id/btn_navigate"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+  					android:textStyle="bold"
+					android:text="@string/btn_navigate"
+					android:layout_toLeftOf="@id/view_map" />
+	
+			</RelativeLayout>
+			<!-- Buttons layout ends. -->
+			</LinearLayout>
+			</ScrollView>
+</LinearLayout>

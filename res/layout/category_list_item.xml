@@ -1,0 +1,17 @@
+	  <TextView
+	    xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1" 
+        android:id="@+id/bottomtext"
+		android:ellipsize="marquee" 
+		android:scrollHorizontally="true" 
+		android:lines="1"
+		android:focusableInTouchMode="false"
+		android:focusable="false"
+        android:textSize="24dp"
+		android:textStyle="normal"
+		android:paddingTop="16px"
+		android:paddingBottom="16px"
+		android:paddingLeft="15px"
+        />

@@ -1,0 +1,12 @@
+<TextView	
+	xmlns:android="http://schemas.android.com/apk/res/android"	
+	android:layout_width="fill_parent"	
+	android:layout_height="wrap_content"	
+	android:gravity="left"	
+	style="?android:attr/listSeparatorTextViewStyle" 
+	android:textSize="28dp"
+	android:textStyle="normal"
+	android:textColor="@drawable/white_color"
+	android:background="@drawable/title_color"
+	android:paddingTop="10px"
+	android:paddingBottom="5px"	/>

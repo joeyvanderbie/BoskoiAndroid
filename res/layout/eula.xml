@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+	<!--
+		Copyright (c) 2010 Boskoi All rights reserved Contact:
+		developer@boskoi.org Developers: Joey van der Bie, Maarten van der
+		Mark and Vincent Vijn Website: http://www.boskoi.org GNU Lesser
+		General Public License Usage This file may be used under the terms of
+		the GNU Lesser General Public License version 3 as published by the
+		Free Software Foundation and appearing in the file LICENSE.LGPL
+		included in the packaging of this file. Please review the following
+		information to ensure the GNU Lesser General Public License version 3
+		requirements will be met: http://www.gnu.org/licenses/lgpl.html. If
+		you have questions regarding the use of this file, please contact
+		Boskoi developers at developer@boskoi.org.
+	-->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical" android:background="@drawable/background_color"
+	android:gravity="center" android:layout_width="fill_parent"
+	android:layout_height="fill_parent">
+
+	<LinearLayout android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:orientation="horizontal"
+		android:gravity="center" android:id="@+id/LinearLayoutButtons"
+		android:layout_alignParentBottom="true" android:background="@drawable/grey_color"
+		android:paddingTop="5px">
+
+		<Button android:id="@+id/Agree" android:layout_height="wrap_content"
+			android:layout_centerHorizontal="true" android:text="Accept"
+			android:layout_weight="1" android:layout_width="wrap_content" />
+
+		<Button android:id="@+id/Disagree" android:layout_height="wrap_content"
+			android:layout_centerHorizontal="true" android:text="Refuse"
+			android:layout_weight="1" android:layout_width="wrap_content" />
+
+	</LinearLayout>
+	<ScrollView android:id="@+id/ScrollView01"
+		android:layout_above="@id/LinearLayoutButtons" android:layout_width="fill_parent"
+		android:layout_height="fill_parent" android:gravity="center">
+		<LinearLayout android:layout_width="fill_parent"
+			android:layout_height="wrap_content" android:orientation="vertical"
+			android:gravity="center" android:paddingBottom="20px"
+			android:paddingTop="20px" android:padding="10px">
+
+			<TextView android:id="@+id/title" android:layout_width="wrap_content"
+				android:layout_height="wrap_content" android:background="@drawable/boskoi_android_logo" />
+
+			<TextView android:id="@+id/version_name"
+				android:layout_width="wrap_content" android:layout_height="wrap_content"
+				android:text="@string/version_name_lbl" android:textColor="@drawable/date_color"
+				android:textStyle="bold" android:layout_marginRight="10px"
+				android:layout_gravity="right" />
+
+			<TextView android:id="@+id/hello_eula" android:layout_width="fill_parent"
+				android:layout_height="wrap_content" android:textColor="@drawable/date_color"
+				android:textStyle="bold" android:layout_below="@id/title"
+				android:layout_alignParentLeft="true" android:layout_marginLeft="0px"
+				android:text="@string/hello_eula" android:layout_gravity="center"
+				android:linksClickable="true" />
+
+
+			<TextView android:id="@+id/spacer" android:layout_width="fill_parent"
+				android:layout_height="wrap_content" />
+
+			<TextView android:id="@+id/eula_title" android:layout_width="fill_parent"
+				android:layout_height="wrap_content" android:textStyle="bold"
+				android:textColor="@drawable/date_color" android:text="@string/eula_title"
+				android:textSize="18dp" android:paddingBottom="5px" />
+			<View android:layout_width="fill_parent"
+				android:layout_marginBottom="2px" android:layout_height="2dip"
+				android:background="#FF000000" />
+
+			<TextView android:id="@+id/eula_1" android:layout_width="fill_parent"
+				android:layout_height="wrap_content" android:textColor="@drawable/date_color"
+				android:textStyle="bold" android:layout_alignParentLeft="true"
+				android:layout_marginLeft="0px" android:text="@string/eula_1"
+				android:layout_gravity="center" />
+			<TextView android:id="@+id/eula_1_sub" android:layout_width="fill_parent"
+				android:layout_height="wrap_content" android:textColor="@drawable/date_color"
+				android:layout_alignParentLeft="true" android:layout_marginLeft="10px"
+				android:layout_marginRight="2px" android:text="@string/eula_1_sub"
+				android:layout_gravity="center" />
+
+			<TextView android:id="@+id/eula_2" android:layout_width="fill_parent"
+				android:layout_height="wrap_content" android:textColor="@drawable/date_color"
+				android:textStyle="bold" android:layout_alignParentLeft="true"
+				android:layout_marginLeft="0px" android:text="@string/eula_2"
+				android:layout_gravity="center" />
+			<TextView android:id="@+id/eula_2_sub" android:layout_width="fill_parent"
+				android:layout_height="wrap_content" android:textColor="@drawable/date_color"
+				android:layout_alignParentLeft="true" android:layout_marginLeft="10px"
+				android:layout_marginRight="2px" android:text="@string/eula_2_sub"
+				android:layout_gravity="center" />
+
+			<TextView android:id="@+id/eula_3" android:layout_width="fill_parent"
+				android:layout_height="wrap_content" android:textColor="@drawable/date_color"
+				android:textStyle="bold" android:layout_alignParentLeft="true"
+				android:layout_marginLeft="0px" android:text="@string/eula_3"
+				android:layout_gravity="center" />
+			<TextView android:id="@+id/eula_3_sub" android:layout_width="fill_parent"
+				android:layout_height="wrap_content" android:textColor="@drawable/date_color"
+				android:layout_alignParentLeft="true" android:layout_marginLeft="10px"
+				android:layout_marginRight="2px" android:text="@string/eula_3_sub"
+				android:layout_gravity="center" />
+
+			<TextView android:id="@+id/eula_4" android:layout_width="fill_parent"
+				android:layout_height="wrap_content" android:textColor="@drawable/date_color"
+				android:textStyle="bold" android:layout_alignParentLeft="true"
+				android:layout_marginLeft="0px" android:text="@string/eula_4"
+				android:layout_gravity="center" />
+			<TextView android:id="@+id/eula_4_sub" android:layout_width="fill_parent"
+				android:layout_height="wrap_content" android:textColor="@drawable/date_color"
+				android:layout_alignParentLeft="true" android:layout_marginLeft="10px"
+				android:layout_marginRight="2px" android:text="@string/eula_4_sub"
+				android:layout_gravity="center" />
+
+			<TextView android:id="@+id/license_title"
+				android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:textStyle="bold" android:textColor="@drawable/date_color"
+				android:text="@string/license_title" android:textSize="18dp"
+				android:layout_marginTop="15px" android:paddingBottom="5px" />
+			<View android:layout_width="fill_parent"
+				android:layout_marginBottom="2px" android:layout_height="2dip"
+				android:background="#FF000000" />
+
+			<TextView android:id="@+id/license" android:layout_width="fill_parent"
+				android:layout_height="wrap_content" android:textColor="@drawable/date_color"
+				android:layout_alignParentLeft="true" android:layout_marginLeft="0px"
+				android:text="@string/license" android:linksClickable="true"
+				android:layout_gravity="center" />
+
+			<TextView android:id="@+id/privacy_title"
+				android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:textStyle="bold" android:textColor="@drawable/date_color"
+				android:text="@string/privacy_title" android:textSize="18dp"
+				android:layout_marginTop="15px" android:paddingBottom="5px" />
+			<View android:layout_width="fill_parent"
+				android:layout_marginBottom="2px" android:layout_height="2dip"
+				android:background="#FF000000" />
+
+			<TextView android:id="@+id/privacy" android:layout_width="fill_parent"
+				android:layout_height="wrap_content" android:textColor="@drawable/date_color"
+				android:layout_alignParentLeft="true" android:layout_marginLeft="0px"
+				android:text="@string/privacy_info" android:layout_gravity="center"
+				android:linksClickable="true" />
+
+			<View android:layout_width="fill_parent"
+				android:layout_marginBottom="5px" android:layout_marginTop="15px"
+				android:layout_height="2dip" android:background="#FF000000" />
+
+			<TextView android:id="@+id/thankyou" android:layout_width="fill_parent"
+				android:layout_height="wrap_content" android:textColor="@drawable/date_color"
+				android:textStyle="bold" android:layout_alignParentLeft="true"
+				android:layout_marginLeft="0px" android:text="@string/thankyou"
+				android:layout_gravity="center" />
+
+		</LinearLayout>
+	</ScrollView>
+</RelativeLayout>

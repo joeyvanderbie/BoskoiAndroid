@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  
+  Copyright (c) 2010 Boskoi
+  All rights reserved
+  Contact: developer@boskoi.org
+  Developers: Joey van der Bie, Maarten van der Mark and Vincent Vijn
+  Website: http://www.boskoi.org
+  
+  GNU Lesser General Public License Usage
+  This file may be used under the terms of the GNU Lesser
+  General Public License version 3 as published by the Free Software
+  Foundation and appearing in the file LICENSE.LGPL included in the
+  packaging of this file. Please review the following information to
+  ensure the GNU Lesser General Public License version 3 requirements
+  will be met: http://www.gnu.org/licenses/lgpl.html.	
+ 	
+ 
+  If you have questions regarding the use of this file, please contact
+  Boskoi developers at developer@boskoi.org.
+ -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/background_color"
+    android:gravity="center" android:paddingBottom="10px" android:paddingTop="10px">
+    <ScrollView android:layout_width="fill_parent" 
+		android:layout_height="fill_parent"
+		android:gravity="center"
+		>
+		<LinearLayout android:layout_width="fill_parent" 
+	    	android:layout_height="wrap_content"
+	    	android:orientation="vertical"
+	    	android:gravity="center" android:paddingBottom="20px" android:paddingTop="20px" android:padding="10px">
+		
+			<TextView  android:id="@+id/title"
+    			android:layout_width="wrap_content" 
+    			android:layout_height="wrap_content" 
+    			android:background="@drawable/boskoi_android_logo" />
+ 			
+ 			<TextView  android:id="@+id/version_name"
+    			android:layout_width="wrap_content" 
+    			android:layout_height="wrap_content"
+    			android:text="@string/version_name_lbl"
+        		android:textColor="@drawable/date_color"
+        		android:textStyle="bold"
+        		android:layout_marginRight="10px"
+    			android:layout_gravity="right"/>
+ 			
+ 			<TextView  android:id="@+id/spacer"
+    			android:layout_width="fill_parent" 
+    			android:layout_height="wrap_content" />      
+ 			
+ 			<TextView android:id="@+id/intro"
+        		android:layout_width="fill_parent"
+        		android:layout_height="wrap_content"
+        		android:textColor="@drawable/date_color"
+        		android:textStyle="bold"
+        		android:layout_below="@id/title"
+        		android:layout_alignParentLeft="true"
+        		android:layout_marginLeft="0px"
+        		android:text="@string/welcome_mgs" android:layout_gravity="center" android:linksClickable="true"/>
+ 			
+ 		
+ 			<!-- TextView  android:id="@+id/spacer2"
+    			android:layout_width="fill_parent" 
+    			android:layout_height="wrap_content" />
+        
+ 			<Button android:id="@+id/view_website"
+        		android:layout_width="fill_parent"
+        		android:layout_height="wrap_content"
+        		android:layout_alignParentLeft="true"
+        		android:layout_marginLeft="0px"
+        		android:textStyle="bold"
+        		android:text="@string/boskoi_url" android:layout_gravity="center_vertical|center_horizontal|center"/>
+        		-->
+    		<View android:layout_width="fill_parent" android:layout_marginTop="10px" android:layout_height="2dip" android:background="#FF000000" />
+    		
+    		<Button android:id="@+id/eulaBtn"
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+					android:textStyle="bold"
+					android:text="@string/eulaBtn" android:gravity="left"/>
+					
+    		<TextView android:id="@+id/eula"
+    			android:visibility="gone"
+        		android:layout_width="fill_parent"
+        		android:layout_height="wrap_content"
+        		android:textColor="@drawable/date_color"
+        		android:textStyle="bold"
+        		android:layout_alignParentLeft="true"
+        		android:layout_marginLeft="0px"
+        		android:layout_marginTop="10px"
+        		android:text="@string/eula" android:layout_gravity="center"/>
+        		
+ 			<View android:layout_width="fill_parent" android:layout_marginTop="10px" android:layout_height="2dip" android:background="#FF000000" />         		
+
+		    <Button android:id="@+id/lgplBtn"
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+					android:textStyle="bold"
+					android:text="@string/lgplBtn" android:gravity="left"/>
+					
+ 			<TextView android:id="@+id/lgpl"
+ 				android:visibility="gone"
+        		android:layout_width="fill_parent"
+        		android:layout_height="wrap_content"
+        		android:textColor="@drawable/date_color"
+        		android:textStyle="bold"
+        		android:layout_alignParentLeft="true"
+        		android:layout_marginLeft="0px"
+        		android:layout_marginTop="10px"
+        		android:text="@string/lgpl" android:layout_gravity="center"/>
+        		
+        	<View android:layout_width="fill_parent" android:layout_marginTop="10px" android:layout_height="2dip" android:background="#FF000000" /> 
+ 		    
+ 		    <Button android:id="@+id/privacyBtn"
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+					android:textStyle="bold"
+					android:text="@string/privacyBtn" android:gravity="left"/>	
+							
+ 			<TextView android:id="@+id/privacy"
+ 				android:visibility="gone"
+        		android:layout_width="fill_parent"
+        		android:layout_height="wrap_content"
+        		android:textColor="@drawable/date_color"
+        		android:textStyle="bold"
+        		android:layout_alignParentLeft="true"
+        		android:layout_marginLeft="0px"
+        		android:layout_marginTop="10px"
+        		android:text="@string/privacy" android:layout_gravity="center"/>
+        		
+        	<View android:layout_width="fill_parent" android:layout_marginTop="10px" android:layout_height="2dip" android:background="#FF000000" /> 
+ 		    
+ 		     		
+        		
+        </LinearLayout>
+	</ScrollView>        
+</RelativeLayout>
