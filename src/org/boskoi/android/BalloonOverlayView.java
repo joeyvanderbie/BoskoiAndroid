@@ -22,6 +22,7 @@
 package org.boskoi.android;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Vector;
 
 import org.boskoi.android.R;
@@ -190,16 +191,12 @@ public class BalloonOverlayView extends FrameLayout {
         title.setTextColor(Color.parseColor(getContext().getText(R.string.title_string).toString()));//Color.rgb(144, 80, 62));
         
         //get full category names from db based on the id's found in the incident
-        String locale = this.getContext().getResources().getConfiguration().locale.getDisplayLanguage();
+        Locale locale = this.getContext().getResources().getConfiguration().locale;
         
         CategoriesData[] categories = BoskoiService.getCategoriesDetails(inci.getIncidentCategories());
         String categ = "";
         for (CategoriesData cate : categories){
-        	if(locale.equals("Nederlands")){
-        		categ = categ + cate.getCategoryTitleNL() + " (" + cate.getCategoryTitleLA()+"), ";
-        	}else{
         		categ = categ + cate.getCategoryTitle() + " (" + cate.getCategoryTitleLA()+"), ";      		
-        	}
         }
         
         title.setText(categ);
@@ -210,13 +207,7 @@ public class BalloonOverlayView extends FrameLayout {
         for (CategoriesData cate : categories){
         	if(!cate.getCategoryTitle().equals("Not available")){
 	        	if(!cate.getCategoryTitleLA().equals("")){
-	        		if(locale.equals("Nederlands") || BoskoiService.language.equals("Nederlands")){
-	        			wiki = wiki + "<a href=http://nl.wikipedia.org/w/index.php?title=Special%3ASearch&search="+cate.getCategoryTitleLA().replace(" ", "%20")+">" + cate.getCategoryTitle() +" on Wikipedia</a><br>" ;      		
-	        		}else{
-	        			wiki = wiki + "<a href=http://en.wikipedia.org/w/index.php?title=Special%3ASearch&search="+cate.getCategoryTitleLA().replace(" ", "%20")+">" + cate.getCategoryTitle() +" on Wikipedia</a><br>" ;      		      			
-	        		}
-	        	}else{
-	        		wiki = wiki + "<a href=http://en.wikipedia.org/w/index.php?title=Special%3ASearch&search="+cate.getCategoryTitle().replace(" ", "%20")+">" + cate.getCategoryTitle() +" on Wikipedia</a><br>" ;   
+	        		wiki = wiki + "<a href=http://"+locale.getLanguage()+".wikipedia.org/w/index.php?title=Special%3ASearch&search="+cate.getCategoryTitle().replace(" ", "%20")+">" + cate.getCategoryTitle() +" on Wikipedia</a><br>" ;   
 	        	}
         	}
         }

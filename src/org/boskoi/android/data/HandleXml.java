@@ -45,6 +45,7 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class HandleXml {
 	
@@ -295,11 +296,13 @@ public class HandleXml {
 				
 		
 				try{
-				NodeList titleNLElementList = element.getElementsByTagName("titlenl");
-				Element titleNLElement = (Element) titleNLElementList.item(0);
+//				NodeList titleNLElementList = element.getElementsByTagName("titlenl");
+//				Element titleNLElement = (Element) titleNLElementList.item(0);
 				
-				NodeList titleNL = titleNLElement.getChildNodes();
-				category.setCategoryTitleNL(((Node) titleNL.item(0)).getNodeValue());
+//				NodeList titleNL = titleNLElement.getChildNodes();
+//				category.setCategoryTitleNL(((Node) titleNL.item(0)).getNodeValue());
+//				
+
 				
 				NodeList titleLAElementList = element.getElementsByTagName("titlela");
 				Element titleLAElement = (Element) titleLAElementList.item(0);
@@ -309,6 +312,19 @@ public class HandleXml {
 				}catch(Exception ex){
 					// do nothing if elements is empty
 				}
+				
+				NodeList localeList = element.getElementsByTagName("locale");
+				Element localeElement = (Element) localeList.item(0);
+				
+				/* TODO temporary fix untill api is fixed*/
+				if(localeElement != null){
+					NodeList locale = localeElement.getChildNodes();
+					category.setCategoryLocale(((Node) locale.item(0)).getNodeValue());
+				}else{
+					category.setCategoryLocale(Locale.US.toString());
+				}
+				
+				
 				NodeList descElementList = element.getElementsByTagName("description");
 				Element descElement = (Element) descElementList.item(0);
 				

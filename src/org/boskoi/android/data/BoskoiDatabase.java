@@ -23,8 +23,7 @@ package org.boskoi.android.data;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.boskoi.android.Util;
+import java.util.Locale;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -32,11 +31,11 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.text.format.DateFormat;
 import android.util.Log;
 
 public class BoskoiDatabase {
 	private static final String TAG = "BoskoiDatabase";
+	private static final Locale defaultLocale = Locale.US;
 
 	public static final String INCIDENT_ID = "_id";
 	public static final String INCIDENT_TITLE = "incident_title";
@@ -55,11 +54,13 @@ public class BoskoiDatabase {
 	public static final String CATEGORY_ID = "_id";
 	public static final String CATEGORY_PARENT_ID = "category_parent_id";
 	public static final String CATEGORY_TITLE = "category_title";
-	public static final String CATEGORY_TITLE_NL = "category_title_nl";
+	//public static final String CATEGORY_TITLE_NL = "category_title_nl";
 	public static final String CATEGORY_TITLE_LA = "category_title_la";
 	public static final String CATEGORY_DESC = "category_desc";
+	public static final String CATEGORY_LOCALE = "category_locale";
 	public static final String CATEGORY_COLOR = "category_color";
 	public static final String CATEGORY_IS_UNREAD = "is_unread";
+	private static final String CATEGORY_LANG_ID = "category_lang_id";
 	
 	public static final String ADD_INCIDENT_ID = "_id";
 	public static final String ADD_INCIDENT_TITLE = "incident_title";
@@ -94,8 +95,13 @@ public class BoskoiDatabase {
 	};
 	
 	public static final String[] CATEGORIES_COLUMNS = new String[] { CATEGORY_ID,
-		CATEGORY_TITLE, CATEGORY_TITLE_NL, CATEGORY_TITLE_LA ,CATEGORY_DESC,CATEGORY_COLOR, CATEGORY_IS_UNREAD
+		CATEGORY_TITLE, CATEGORY_LOCALE, CATEGORY_TITLE_LA ,CATEGORY_DESC,CATEGORY_COLOR, CATEGORY_IS_UNREAD
 	};
+	
+	public static final String[] CATEGORIES_LANG_COLUMNS = new String[] { CATEGORY_LANG_ID, CATEGORY_ID,
+		CATEGORY_TITLE, CATEGORY_LOCALE,CATEGORY_DESC
+	};
+	
 	
 	public static final String[] ADD_INCIDENTS_COLUMNS = new String[] {
 		ADD_INCIDENT_ID,
@@ -117,13 +123,13 @@ public class BoskoiDatabase {
 	private SQLiteDatabase mDb;
 
 	private static final String DATABASE_NAME = "ushahidi_db";
-
+	private static final String CATEGORIES_LANG_TABLE = "categories_lang";
 	private static final String INCIDENTS_TABLE = "incidents";
 	private static final String ADD_INCIDENTS_TABLE = "add_incidents";
 	private static final String CATEGORIES_TABLE = "categories";
 	private static final String BLOG_TABLE = "blog";
 
-	private static final int DATABASE_VERSION = 10;
+	private static final int DATABASE_VERSION = 11;
 
   // NOTE: the incident ID is used as the row ID.
   // Furthermore, if a row already exists, an insert will replace
@@ -169,12 +175,20 @@ public class BoskoiDatabase {
 		+ CATEGORY_ID + " INTEGER PRIMARY KEY ON CONFLICT REPLACE, "
 		+ CATEGORY_PARENT_ID + " INTEGER, "
 		+ CATEGORY_TITLE + " TEXT NOT NULL, " 
-		+ CATEGORY_TITLE_NL + " TEXT NOT NULL, " 
+		+ CATEGORY_LOCALE + " TEXT NOT NULL, " 
 		+ CATEGORY_TITLE_LA + " TEXT NOT NULL, " 
 		+ CATEGORY_DESC + " TEXT, " 
 		+ CATEGORY_COLOR + " TEXT, "
 		+ CATEGORY_IS_UNREAD + " BOOLEAN NOT NULL "
 		+ ")";
+
+	
+	private static final String CATEGORIES_LANG_TABLE_CREATE = "CREATE TABLE " + CATEGORIES_LANG_TABLE + " ("
+			+ CATEGORY_LANG_ID + " INTEGER PRIMARY KEY ON CONFLICT REPLACE, "
+			+ CATEGORY_ID + " INTEGER, "
+			+ CATEGORY_TITLE + " TEXT NOT NULL, " 
+			+ CATEGORY_LOCALE + " TEXT NOT NULL " 
+			+ ")";
 	
 	private static final String BLOG_TABLE_CREATE = "CREATE TABLE " +BLOG_TABLE + " ("
 	+ BLOG_ID + " INTEGER PRIMARY KEY ON CONFLICT REPLACE, "
@@ -196,6 +210,7 @@ public class BoskoiDatabase {
 		public void onCreate(SQLiteDatabase db) {
 			db.execSQL(INCIDENTS_TABLE_CREATE);
     		db.execSQL(CATEGORIES_TABLE_CREATE);
+    		db.execSQL(CATEGORIES_LANG_TABLE_CREATE);
     		db.execSQL(ADD_INCIDENTS_TABLE_CREATE);
     		db.execSQL(BLOG_TABLE_CREATE);
 		}
@@ -206,6 +221,7 @@ public class BoskoiDatabase {
     		//		+ newVersion + " which destroys all old data");
     		db.execSQL("DROP TABLE IF EXISTS " + INCIDENTS_TABLE);
       		db.execSQL("DROP TABLE IF EXISTS " + CATEGORIES_TABLE);
+      		db.execSQL("DROP TABLE IF EXISTS " + CATEGORIES_LANG_TABLE);
       		db.execSQL("DROP TABLE IF EXISTS " + ADD_INCIDENTS_TABLE);
       		db.execSQL("DROP TABLE IF EXISTS " + BLOG_TABLE);
       		onCreate(db);
@@ -216,6 +232,10 @@ public class BoskoiDatabase {
 		
 		mDb.execSQL("DROP TABLE IF EXISTS " + CATEGORIES_TABLE);
 		mDb.execSQL(CATEGORIES_TABLE_CREATE);
+	}
+	public void createCategoriesLangTable(){
+		mDb.execSQL("DROP TABLE IF EXISTS " + CATEGORIES_LANG_TABLE);
+		mDb.execSQL(CATEGORIES_LANG_TABLE_CREATE);
 	}
 	public void createIncidentsTable(){
 		
@@ -302,19 +322,19 @@ public class BoskoiDatabase {
   		
   		
   		//check if the db already has the columns for multilingual, if not, rebuild table.
-  		try{
-  			mDb.rawQuery("SELECT "+CATEGORY_TITLE_NL+" FROM "+CATEGORIES_TABLE, null);
-  		}catch(Exception ex){
-  			Log.i("Error categories language column not found ", ex.toString());
-  			mDb.execSQL("DROP TABLE IF EXISTS " + CATEGORIES_TABLE);
-  			mDb.execSQL(CATEGORIES_TABLE_CREATE);
-  		}
+//  		try{
+//  			//mDb.rawQuery("SELECT "+CATEGORY_TITLE_NL+" FROM "+CATEGORIES_TABLE, null);
+//  			mDb.rawQuery("SELECT "+CATEGORY_LOCALE+" FROM "+CATEGORIES_TABLE, null);
+//  		}catch(Exception ex){
+//  			Log.i("Error categories language column not found ", ex.toString());
+//  			createCategoriesTable();
+//  		}
   		
   		ContentValues initialValues = new ContentValues();
   		initialValues.put(CATEGORY_ID, categories.getCategoryId());
   		initialValues.put(CATEGORY_PARENT_ID, categories.getCategoryParentId());
   		initialValues.put(CATEGORY_TITLE, categories.getCategoryTitle());
-  		initialValues.put(CATEGORY_TITLE_NL, categories.getCategoryTitleNL());
+  		initialValues.put(CATEGORY_LOCALE, categories.getCategoryLocale());
   		initialValues.put(CATEGORY_TITLE_LA, categories.getCategoryTitleLA());
   		initialValues.put(CATEGORY_DESC, categories.getCategoryDescription());
   		initialValues.put(CATEGORY_COLOR, categories.getCategoryColor());
@@ -322,6 +342,28 @@ public class BoskoiDatabase {
   		return mDb.insert(CATEGORIES_TABLE, null, initialValues);
   	}
 
+	public long createCategoriesLang(CategoriesLangData categories) {
+  		
+  		
+  		//check if the db already has the columns for multilingual, if not, rebuild table.
+//  		try{
+//  			//mDb.rawQuery("SELECT "+CATEGORY_TITLE_NL+" FROM "+CATEGORIES_TABLE, null);
+//  			mDb.rawQuery("SELECT "+CATEGORY_LOCALE+" FROM "+CATEGORIES_TABLE, null);
+//  		}catch(Exception ex){
+//  			Log.i("Error categories language column not found ", ex.toString());
+//  			createCategoriesTable();
+//  		}
+  		
+  		ContentValues initialValues = new ContentValues();
+  		initialValues.put(CATEGORY_ID, categories.getCategoryId());
+  		initialValues.put(CATEGORY_LANG_ID, categories.getCategoryLangId());
+  		initialValues.put(CATEGORY_TITLE, categories.getCategoryTitle());
+  		initialValues.put(CATEGORY_LOCALE, categories.getCategoryLocale());
+  		initialValues.put(CATEGORY_DESC, categories.getCategoryDescription());
+  		return mDb.insert(CATEGORIES_LANG_TABLE, null, initialValues);
+  	}
+
+  	
   	public int addNewIncidentsAndCountUnread(ArrayList<IncidentsData> newIncidents) {
   		addIncidents(newIncidents, true);
   		return fetchUnreadCount();
@@ -350,9 +392,37 @@ public class BoskoiDatabase {
 
   
   public Cursor fetchAllCategories() {
+	  /*TO-DO: hier spelen met lang/locale om te kijken of alles werkt*/
     return mDb.query(CATEGORIES_TABLE, CATEGORIES_COLUMNS, null, null, null, null, CATEGORY_TITLE
         + " ASC");
   }
+  
+  public Cursor fetchAllCategoriesLang(String locale) {
+	  	String where[] = new String[1];
+	  	where[0] = CATEGORY_LOCALE+"="+locale;
+	  
+	    return mDb.query(CATEGORIES_LANG_TABLE, CATEGORIES_LANG_COLUMNS, null, where, null, null, CATEGORY_ID
+	        + " ASC");
+	  }
+
+  public Cursor fetchAllCategories(String locale){
+	  if(locale.equals(defaultLocale)){
+		  return fetchAllCategories();
+	  }
+	  
+	  String sql = "SELECT "+CATEGORIES_TABLE+"."+CATEGORY_COLOR+","
+			  				+CATEGORIES_TABLE+"."+CATEGORY_IS_UNREAD+","
+			  				+ CATEGORIES_TABLE+"."+CATEGORY_PARENT_ID+","
+			  				+ CATEGORIES_TABLE+"."+CATEGORY_TITLE_LA+","
+			  				+ CATEGORIES_TABLE+"."+CATEGORY_ID+","
+			  				+ CATEGORIES_LANG_TABLE+"."+CATEGORY_TITLE+","
+			  				+ CATEGORIES_LANG_TABLE+"."+CATEGORY_DESC+","
+			  				+ CATEGORIES_LANG_TABLE+"."+CATEGORY_LOCALE+
+			  				" FROM "+CATEGORIES_TABLE+","+CATEGORIES_LANG_TABLE
+			  				+" WHERE "+CATEGORY_PARENT_ID+" = ? ORDER BY "+CATEGORIES_LANG_TABLE+"."+CATEGORY_TITLE+ " ASC";
+		return mDb.rawQuery(sql, new String[] { locale } );
+  }
+  
   
   public Cursor fetchAllBlog() {
 	  return mDb.query(BLOG_TABLE, BLOG_COLUMNS, null, null, null, null, BLOG_DATE + " DESC");
@@ -379,15 +449,59 @@ public class BoskoiDatabase {
   		return fetchCategoriesFromParent(0);
 	  }
   
-  public Cursor fetchCategoriesFromParent(int parentId) {
-		String sql = "SELECT * FROM "+CATEGORIES_TABLE+" WHERE "+CATEGORY_PARENT_ID+" = ? ORDER BY "
-			+CATEGORY_TITLE+ " ASC";
-		return mDb.rawQuery(sql, new String[] { ""+parentId } );
+  public Cursor fetchParentCategories(Locale locale) {
+		return fetchCategoriesFromParent(0, locale);
 	  }
+  
+  public Cursor fetchCategoriesFromParent(int parentId) {
+	  
+	  return fetchCategoriesFromParent(parentId, defaultLocale);
+	  }
+  
+  public Cursor fetchCategoriesFromParent(int parentId, Locale locale) {
+	  	if(!locale.equals(defaultLocale)){
+		 String sql = "SELECT "+CATEGORIES_TABLE+"."+CATEGORY_COLOR+","
+	  				+CATEGORIES_TABLE+"."+CATEGORY_IS_UNREAD+","
+	  				+ CATEGORIES_TABLE+"."+CATEGORY_PARENT_ID+","
+	  				+ CATEGORIES_TABLE+"."+CATEGORY_TITLE_LA+","
+	  				+ CATEGORIES_TABLE+"."+CATEGORY_ID+","
+	  				+ CATEGORIES_LANG_TABLE+"."+CATEGORY_TITLE+","
+	  				+ CATEGORIES_LANG_TABLE+"."+CATEGORY_DESC+","
+	  				+ CATEGORIES_LANG_TABLE+"."+CATEGORY_LOCALE+
+	  				" FROM "+CATEGORIES_TABLE+","+CATEGORIES_LANG_TABLE
+	  				+" WHERE "+CATEGORY_PARENT_ID+" = ? AND "+ CATEGORIES_LANG_TABLE+"."+CATEGORY_LOCALE+"= ? AND "+CATEGORIES_LANG_TABLE+"."+CATEGORY_ID+"="+CATEGORIES_TABLE+"."+CATEGORY_ID+"  ORDER BY "+CATEGORIES_LANG_TABLE+"."+CATEGORY_TITLE+ " ASC";
+		 return mDb.rawQuery(sql, new String[] { ""+parentId, locale.toString() } );
+	  	}else{
+	  		String sql = "SELECT * FROM "+CATEGORIES_TABLE+" WHERE "+CATEGORY_PARENT_ID+" = ? ORDER BY "
+                    +CATEGORY_TITLE+ " ASC";
+            return mDb.rawQuery(sql, new String[] { ""+parentId } );
+	  	}
+	  }
+  
   public Cursor fetchCategoriesById(int id) {
-		String sql = "SELECT * FROM "+CATEGORIES_TABLE+" WHERE "+CATEGORY_ID+" = ? ORDER BY "
-			+CATEGORY_TITLE+ " ASC";
-		return mDb.rawQuery(sql, new String[] { ""+id } );
+		return fetchCategoriesById(id, defaultLocale);
+	  }
+  
+  public Cursor fetchCategoriesById(int id, Locale locale) {
+		
+		if(!locale.equals(defaultLocale)){
+			 String sql = "SELECT "+CATEGORIES_TABLE+"."+CATEGORY_COLOR+","
+		  				+CATEGORIES_TABLE+"."+CATEGORY_IS_UNREAD+","
+		  				+ CATEGORIES_TABLE+"."+CATEGORY_PARENT_ID+","
+		  				+ CATEGORIES_TABLE+"."+CATEGORY_TITLE_LA+","
+		  				+ CATEGORIES_TABLE+"."+CATEGORY_ID+","
+		  				+ CATEGORIES_LANG_TABLE+"."+CATEGORY_TITLE+","
+		  				+ CATEGORIES_LANG_TABLE+"."+CATEGORY_DESC+","
+		  				+ CATEGORIES_LANG_TABLE+"."+CATEGORY_LOCALE+
+		  				" FROM "+CATEGORIES_TABLE+","+CATEGORIES_LANG_TABLE
+		  				+" WHERE "+CATEGORIES_LANG_TABLE+"."+CATEGORY_ID+" = ? AND "+ CATEGORIES_LANG_TABLE+"."+CATEGORY_LOCALE+"= ?  AND "+CATEGORIES_LANG_TABLE+"."+CATEGORY_ID+"="+CATEGORIES_TABLE+"."+CATEGORY_ID+" ORDER BY "+CATEGORIES_LANG_TABLE+"."+CATEGORY_TITLE+ " ASC";
+			 return mDb.rawQuery(sql, new String[] { ""+id, locale.toString() } );
+		  	}else{
+		  		String sql = "SELECT * FROM "+CATEGORIES_TABLE+" WHERE "+CATEGORY_ID+" = ? ORDER BY "
+		  				+CATEGORY_TITLE+ " ASC";
+		  			return mDb.rawQuery(sql, new String[] { ""+id } );
+		  	}
+		
 	  }
   
   	public Cursor fetchIncidentsByCategories( String filter ) {
@@ -407,11 +521,13 @@ public class BoskoiDatabase {
   	public boolean clearData() {
   		// TODO: just wipe the database.
   		mDb.execSQL("DROP TABLE IF EXISTS "+INCIDENTS_TABLE);
+  		mDb.execSQL("DROP TABLE IF EXISTS "+CATEGORIES_LANG_TABLE);
   		mDb.execSQL("DROP TABLE IF EXISTS "+CATEGORIES_TABLE);
   		mDb.execSQL("DROP TABLE IF EXISTS "+ADD_INCIDENTS_TABLE);
   		mDb.execSQL("DROP TABLE IF EXISTS "+BLOG_TABLE);
   		mDb.execSQL(INCIDENTS_TABLE_CREATE);
   		mDb.execSQL(CATEGORIES_TABLE_CREATE);
+  		mDb.execSQL(CATEGORIES_LANG_TABLE_CREATE);
   		mDb.execSQL(ADD_INCIDENTS_TABLE_CREATE);
   		mDb.execSQL(BLOG_TABLE_CREATE);
   		Log.i("Database ","cleared out complete database");
@@ -426,9 +542,17 @@ public class BoskoiDatabase {
   	public boolean deleteAllCategories() {
   		return mDb.delete(CATEGORIES_TABLE, null, null) > 0;
   	}
+  	
+  	public boolean deleteAllCategoriesLang() {
+  		return mDb.delete(CATEGORIES_TABLE, null, null) > 0;
+  	}
 
   	public boolean deleteCategory(int id) {
   		return mDb.delete(CATEGORIES_TABLE, CATEGORY_ID + "=" + id, null) > 0;
+  	}
+  	
+  	public boolean deleteCategoryLang(int id) {
+  		return mDb.delete(CATEGORIES_LANG_TABLE, CATEGORY_ID + "=" + id, null) > 0;
   	}
   	
   	public boolean deleteAllBlog(){
@@ -592,6 +716,21 @@ public class BoskoiDatabase {
 
   			for (CategoriesData category : categories) {
   				createCategories(category, isUnread);
+  			}
+
+  			//limitRows(CATEGORIES_TABLE, 20, CATEGORY_ID);
+  			mDb.setTransactionSuccessful();
+  		} finally {
+  			mDb.endTransaction();
+  		}
+  	}
+  	
+	public void addCategoriesLang(List<CategoriesLangData> categories) {
+  		try {
+  			mDb.beginTransaction();
+
+  			for (CategoriesLangData category : categories) {
+  				createCategoriesLang(category);
   			}
 
   			//limitRows(CATEGORIES_TABLE, 20, CATEGORY_ID);

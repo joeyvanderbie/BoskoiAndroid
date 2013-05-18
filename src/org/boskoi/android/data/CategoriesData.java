@@ -28,20 +28,29 @@ public class CategoriesData {
 	private String categoryTitle = "";
 	private String categoryDescription = "";
 	private String categoryColor = "";
-	private String categoryTitleNL = "";
+	//private String categoryTitleNL = "";
 	private String categoryTitleLA = "";
+	private String categoryLocale = "";
 	
 	
-	public String getCategoryTitleNL() {
-		return categoryTitleNL;
+	public String getCategoryLocale() {
+		return categoryLocale;
 	}
 
-	public void setCategoryTitleNL(String categoryTitleNL) {
-		if(categoryTitleNL != null){
-			this.categoryTitleNL = categoryTitleNL;
-		}
+	public void setCategoryLocale(String categoryLocale) {
+		this.categoryLocale = categoryLocale;
 	}
 
+//	public String getCategoryTitleNL() {
+//		return categoryTitleNL;
+//	}
+//
+//	public void setCategoryTitleNL(String categoryTitleNL) {
+//		if(categoryTitleNL != null){
+//			this.categoryTitleNL = categoryTitleNL;
+//		}
+//	}
+//
 	public String getCategoryTitleLA() {
 		return categoryTitleLA;
 	}
@@ -60,6 +69,7 @@ public class CategoriesData {
 	public void setCategoryTitle(String title ) {
 		this.categoryTitle = title;
 	}
+
 	
 	public String getCategoryDescription() {
 		return categoryDescription;

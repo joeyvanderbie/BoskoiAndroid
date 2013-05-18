@@ -22,9 +22,9 @@
 package org.boskoi.android;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Vector;
 
-import org.boskoi.android.R;
 import org.boskoi.android.data.CategoriesData;
 
 import android.app.ListActivity;
@@ -34,8 +34,6 @@ import android.graphics.PixelFormat;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
-import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -88,7 +86,7 @@ public class SimpleCategoryList extends ListActivity {//implements ListView.OnSc
 //			Collections.shuffle(list);
 	
 	categories = Util.joinStringArray(categories, newCatAll);
-	String locale = this.getBaseContext().getResources().getConfiguration().locale.getDisplayLanguage();
+	Locale locale = this.getBaseContext().getResources().getConfiguration().locale;
    	
    	for(CategoriesData cat : BoskoiService.getParentCategories()){
    		
@@ -99,13 +97,8 @@ public class SimpleCategoryList extends ListActivity {//implements ListView.OnSc
    			
    			
    			int i = 0;
-   			for(CategoriesData childCat : BoskoiService.getCategoriesFromParent(cat.getCategoryId())){
-   				if(locale.equals("Nederlands") || BoskoiService.language.equals("Nederlands")){
-   					childStrings[i] = childCat.getCategoryTitleNL() + " ("+childCat.getCategoryTitleLA()+")";
-   				}else{
+   			for(CategoriesData childCat : BoskoiService.getCategoriesFromParent(cat.getCategoryId(), locale)){
    					childStrings[i] = childCat.getCategoryTitle() + " ("+childCat.getCategoryTitleLA()+")";
-   	
-   				}
    				englishStrings[i] = childCat.getCategoryId()+"";
    				i++;
    			}
@@ -126,7 +119,7 @@ public class SimpleCategoryList extends ListActivity {//implements ListView.OnSc
 				categories = Util.joinStringArray(categories, englishStrings);
 	
 	    		//here we also need to set the array with real CatData
-	    		for(CategoriesData childCat : BoskoiService.getCategoriesFromParent(cat.getCategoryId())){
+	    		for(CategoriesData childCat : BoskoiService.getCategoriesFromParent(cat.getCategoryId(), locale)){
 	        		hmCategories.put(childCat.getCategoryTitle(), childCat);
 	    		}
 	    		hmParentCategories.put(cat.getCategoryId(), cat);

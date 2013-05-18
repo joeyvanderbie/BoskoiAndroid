@@ -22,9 +22,9 @@
 package org.boskoi.android;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Vector;
 
-import org.boskoi.android.R;
 import org.boskoi.android.data.CategoriesData;
 
 import android.app.ListActivity;
@@ -34,7 +34,6 @@ import android.graphics.PixelFormat;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -91,7 +90,7 @@ public class CategoryList extends ListActivity {//implements ListView.OnScrollLi
     	hmCategories = new HashMap<String, CategoriesData>();
     	hmParentCategories = new HashMap<Integer, CategoriesData>();
     	
-	    String locale = this.getBaseContext().getResources().getConfiguration().locale.getDisplayLanguage();
+	    Locale locale = this.getBaseContext().getResources().getConfiguration().locale;
 
     	
 	for(CategoriesData cat : BoskoiService.getParentCategories()){
@@ -103,13 +102,8 @@ public class CategoryList extends ListActivity {//implements ListView.OnScrollLi
 
    			
    			int i = 0;
-   			for(CategoriesData childCat : BoskoiService.getCategoriesFromParent(cat.getCategoryId())){
-   				if(locale.equals("Nederlands") || BoskoiService.language.equals("Nederlands")){
-   					childStrings[i] = childCat.getCategoryTitleNL() + " ("+childCat.getCategoryTitleLA()+")";
-   				}else{
-   					childStrings[i] = childCat.getCategoryTitle() + " ("+childCat.getCategoryTitleLA()+")";
-   	
-   				}
+   			for(CategoriesData childCat : BoskoiService.getCategoriesFromParent(cat.getCategoryId(), locale)){
+   				childStrings[i] = childCat.getCategoryTitle() + " ("+childCat.getCategoryTitleLA()+")";
    				englishStrings[i] = childCat.getCategoryTitle();
    				i++;
    			}
@@ -131,11 +125,7 @@ public class CategoryList extends ListActivity {//implements ListView.OnScrollLi
 				
 	    		//here we also need to set the hashmap with real CatData
 	    		for(CategoriesData childCat : BoskoiService.getCategoriesFromParent(cat.getCategoryId())){
-	    			if(locale.equals("Nederlands") || BoskoiService.language.equals("Nederlands")){
-	    				hmCategories.put(childCat.getCategoryTitleNL() + " ("+childCat.getCategoryTitleLA()+")", childCat);
-	    			}else{
-	    				hmCategories.put(childCat.getCategoryTitle() + " ("+childCat.getCategoryTitleLA()+")", childCat);
-	    			}
+	    			hmCategories.put(childCat.getCategoryTitle() + " ("+childCat.getCategoryTitleLA()+")", childCat);
 	    		}
 	    		hmParentCategories.put(cat.getCategoryId(), cat);
     		}
@@ -275,25 +265,15 @@ public class CategoryList extends ListActivity {//implements ListView.OnScrollLi
      boolean isChecked = this.getListView().isItemChecked(position); 
      CategoriesData cat = hmCategories.get(selection);
 
-	 String locale = this.getBaseContext().getResources().getConfiguration().locale.getDisplayLanguage();
-
 	     if( isChecked ) {
-	    	 
 	 		vectorCategories.add(cat.getCategoryId()+"");
-	 		if(locale.equals("Nederlands") || BoskoiService.language.equals("Nederlands")){
-	 			vectorCategoriesData.add(cat.getCategoryTitleNL());
-	 		}else{
-	 			vectorCategoriesData.add(cat.getCategoryTitle());
-	 		}
+	 		vectorCategoriesData.add(cat.getCategoryTitle());
 
  		} else {
 	 		//fixed a crash here.
 	 		vectorCategories.remove(cat.getCategoryId()+"");
-	 		if(locale.equals("Nederlands") || BoskoiService.language.equals("Nederlands")){
-	 			vectorCategoriesData.remove(cat.getCategoryTitleNL());
-	 		}else{
-	 			vectorCategoriesData.remove(cat.getCategoryTitle());
-	 		} 		}
+	 		vectorCategoriesData.remove(cat.getCategoryTitle());
+	 		} 	
     }
 }
 

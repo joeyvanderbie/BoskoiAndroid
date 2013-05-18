@@ -187,16 +187,12 @@ public class ListIncidents extends Activity
         title.setTextColor(Color.parseColor(getText(R.string.title_string).toString()));//Color.rgb(144, 80, 62));
 
         //get full category names from db based on the id's found in the incident
-        String locale = this.getBaseContext().getResources().getConfiguration().locale.getDisplayLanguage();
+        Locale locale = this.getBaseContext().getResources().getConfiguration().locale;
         
-        CategoriesData[] categories = BoskoiService.getCategoriesDetails(inci.getIncidentCategories());
+        CategoriesData[] categories = BoskoiService.getCategoriesDetails(inci.getIncidentCategories(), locale);
         String categ = "";
         for (CategoriesData cate : categories){
-        	if(locale.equals("Nederlands") || BoskoiService.language.equals("Nederlands")){
-        		categ = categ + cate.getCategoryTitleNL() + " (" + cate.getCategoryTitleLA()+"), ";
-        	}else{
-        		categ = categ + cate.getCategoryTitle() + " (" + cate.getCategoryTitleLA()+"), ";      		
-        	}
+        	categ = categ + cate.getCategoryTitle() + " (" + cate.getCategoryTitleLA()+"), ";      		
         }
         title.setText(categ);
         
@@ -603,20 +599,16 @@ public class ListIncidents extends Activity
 					d = ImageManager.getImages( thumbnails[0]);
 					
 			        //get full category names from db based on the id's found in the incident (disregard original title)
-			        String locale = this.getBaseContext().getResources().getConfiguration().locale.getDisplayLanguage();
+			        Locale locale = this.getBaseContext().getResources().getConfiguration().locale;
 			        
-			        CategoriesData[] catdata = BoskoiService.getCategoriesDetails(incidentData.getIncidentCategories());
+			        CategoriesData[] catdata = BoskoiService.getCategoriesDetails(incidentData.getIncidentCategories(), locale);
 			        String categ = "";
 			        int i =0;
 			        for (CategoriesData cate : catdata){
 			        	if(i > 0){
 			        		categ = categ+ ", ";
 			        	}
-			        	if(locale.equals("Nederlands") || BoskoiService.language.equals("Nederlands")){
-			        		categ = categ + cate.getCategoryTitleNL();
-			        	}else{
-			        		categ = categ + cate.getCategoryTitle();      		
-			        	}
+			        	categ = categ + cate.getCategoryTitle();      		
 			        	i++;
 			        }
 			        title = categ;
@@ -650,23 +642,18 @@ public class ListIncidents extends Activity
 			}
 			
 			//set the filtered by string (convert the by id to string)
-			String locale = this.getBaseContext().getResources().getConfiguration().locale.getDisplayLanguage();
+			Locale locale = this.getBaseContext().getResources().getConfiguration().locale;
 			
 			CategoriesData catDetails = new CategoriesData();
 			
 			if(!by.equals("All") ){
-				CategoriesData[] cats = BoskoiService.getCategoriesDetails(by);
+				CategoriesData[] cats = BoskoiService.getCategoriesDetails(by, locale);
 				catDetails = cats[0];
 			}else{
 				catDetails.setCategoryTitle("All");
-				catDetails.setCategoryTitleNL("All");
 			}
-			
-			if(locale.equals("Nederlands") || BoskoiService.language.equals("Nederlands")){
-				btnFilterCategory.setText(getString(R.string.incident_filter_category)+" "+catDetails.getCategoryTitleNL());
-			}else{
-				btnFilterCategory.setText(getString(R.string.incident_filter_category)+" "+catDetails.getCategoryTitle());
-			}
+	
+			btnFilterCategory.setText(getString(R.string.incident_filter_category)+" "+catDetails.getCategoryTitle());
 			
 	}
   

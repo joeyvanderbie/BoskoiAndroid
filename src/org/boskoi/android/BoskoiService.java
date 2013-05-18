@@ -25,6 +25,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Vector;
 
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -79,6 +80,7 @@ public class BoskoiService extends Service {
 	public static long blogLastUpdate = 0;
 	public static String lastUpdate = "1970-01-01 00:00:00"; // default value
 	public static long updateInterval = 24 * 60 * 60 * 1000; // currently 24
+	public static Locale defaultLocale = Locale.US;
 	// hours
 	public static String language = "english";
 	public static int numberOfNewReports = 0;
@@ -302,18 +304,12 @@ public class BoskoiService extends Service {
 
 	public static String[] getParentCategoriesString(Context context) {
 		String categories[] = new String[getParentCategories().length];
-		String locale = context.getResources().getConfiguration().locale
-				.getDisplayLanguage();
+		Locale locale = context.getResources().getConfiguration().locale;
 
 		int i = 0;
-		for (CategoriesData cat : getParentCategories()) {
-			if (locale.equals("Nederlands")) {
-				categories[i] = cat.getCategoryTitleNL() + " ("
-						+ cat.getCategoryTitleLA() + ")";
-			} else {
+		for (CategoriesData cat : getParentCategories(locale)) {
 				categories[i] = cat.getCategoryTitle() + " ("
 						+ cat.getCategoryTitleLA() + ")";
-			}
 			i++;
 		}
 		return categories;
@@ -325,17 +321,28 @@ public class BoskoiService extends Service {
 
 		return categories;
 	}
+	
+	public static CategoriesData[] getCategoriesFromParentString(int parentId, Locale locale) {
 
-	public static CategoriesData[] getParentCategories() {
-		Cursor cursor = BoskoiApplication.mDb.fetchParentCategories();
+		CategoriesData[] categories = getCategoriesFromParent(parentId, locale);
+
+		return categories;
+	}
+
+	public static CategoriesData[] getParentCategories(){
+		return getParentCategories(defaultLocale);
+	}
+	
+	public static CategoriesData[] getParentCategories(Locale locale) {
+		Cursor cursor = BoskoiApplication.mDb.fetchParentCategories(locale);
 		CategoriesData result[] = new CategoriesData[cursor.getCount()];
 
 		int i = 0;
 		if (cursor.moveToFirst()) {
 			int titleIndex = cursor
 					.getColumnIndexOrThrow(BoskoiDatabase.CATEGORY_TITLE);
-			int titleNL = cursor
-					.getColumnIndexOrThrow(BoskoiDatabase.CATEGORY_TITLE_NL);
+			int cat_locale = cursor
+					.getColumnIndexOrThrow(BoskoiDatabase.CATEGORY_LOCALE);
 			int titleLA = cursor
 					.getColumnIndexOrThrow(BoskoiDatabase.CATEGORY_TITLE_LA);
 			int idIndex = cursor
@@ -351,7 +358,7 @@ public class BoskoiService extends Service {
 				CategoriesData cat = new CategoriesData();
 				cat.setCategoryId(cursor.getInt(idIndex));
 				cat.setCategoryTitle(cursor.getString(titleIndex));
-				cat.setCategoryTitleNL(cursor.getString(titleNL));
+				cat.setCategoryLocale(cursor.getString(cat_locale));
 				cat.setCategoryTitleLA(cursor.getString(titleLA));
 				cat.setCategoryParentId(cursor.getInt(parentId));
 				cat.setCategoryColor(cursor.getString(color));
@@ -366,8 +373,12 @@ public class BoskoiService extends Service {
 		cursor.close();
 		return result;
 	}
-
+	
 	public static CategoriesData[] getCategoriesDetails(String categoryIds) {
+		return getCategoriesDetails( categoryIds,  defaultLocale) ;
+	}
+
+	public static CategoriesData[] getCategoriesDetails(String categoryIds, Locale locale) {
 
 		String[] categories = categoryIds.split(",");
 		CategoriesData result[] = new CategoriesData[categories.length];
@@ -376,13 +387,13 @@ public class BoskoiService extends Service {
 
 		for (String categoryId : categories) {
 			Cursor cursor = BoskoiApplication.mDb.fetchCategoriesById(Integer
-					.parseInt(categoryId));
+					.parseInt(categoryId), locale);
 
 			if (cursor.moveToFirst()) {
 				int titleIndex = cursor
 						.getColumnIndexOrThrow(BoskoiDatabase.CATEGORY_TITLE);
-				int titleNL = cursor
-						.getColumnIndexOrThrow(BoskoiDatabase.CATEGORY_TITLE_NL);
+				int cat_locale = cursor
+						.getColumnIndexOrThrow(BoskoiDatabase.CATEGORY_LOCALE);
 				int titleLA = cursor
 						.getColumnIndexOrThrow(BoskoiDatabase.CATEGORY_TITLE_LA);
 				int idIndex = cursor
@@ -397,7 +408,7 @@ public class BoskoiService extends Service {
 				CategoriesData cat = new CategoriesData();
 				cat.setCategoryId(cursor.getInt(idIndex));
 				cat.setCategoryTitle(cursor.getString(titleIndex));
-				cat.setCategoryTitleNL(cursor.getString(titleNL));
+				cat.setCategoryLocale(cursor.getString(cat_locale));
 				cat.setCategoryTitleLA(cursor.getString(titleLA));
 				cat.setCategoryParentId(cursor.getInt(parentId));
 				cat.setCategoryColor(cursor.getString(color));
@@ -414,16 +425,20 @@ public class BoskoiService extends Service {
 	}
 
 	public static CategoriesData[] getCategoriesFromParent(int categoryId) {
+		return getCategoriesFromParent(categoryId, defaultLocale);
+	}
+	
+	public static CategoriesData[] getCategoriesFromParent(int categoryId, Locale locale) {
 		Cursor cursor = BoskoiApplication.mDb
-				.fetchCategoriesFromParent(categoryId);
+				.fetchCategoriesFromParent(categoryId, locale);
 		CategoriesData result[] = new CategoriesData[cursor.getCount()];
 
 		int i = 0;
 		if (cursor.moveToFirst()) {
 			int titleIndex = cursor
 					.getColumnIndexOrThrow(BoskoiDatabase.CATEGORY_TITLE);
-			int titleNL = cursor
-					.getColumnIndexOrThrow(BoskoiDatabase.CATEGORY_TITLE_NL);
+			int cat_locale = cursor
+					.getColumnIndexOrThrow(BoskoiDatabase.CATEGORY_LOCALE);
 			int titleLA = cursor
 					.getColumnIndexOrThrow(BoskoiDatabase.CATEGORY_TITLE_LA);
 			int idIndex = cursor
@@ -439,7 +454,7 @@ public class BoskoiService extends Service {
 				CategoriesData cat = new CategoriesData();
 				cat.setCategoryId(cursor.getInt(idIndex));
 				cat.setCategoryTitle(cursor.getString(titleIndex));
-				cat.setCategoryTitleNL(cursor.getString(titleNL));
+				cat.setCategoryLocale(cursor.getString(cat_locale));
 				cat.setCategoryTitleLA(cursor.getString(titleLA));
 				cat.setCategoryParentId(cursor.getInt(parentId));
 				cat.setCategoryColor(cursor.getString(color));
