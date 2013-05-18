@@ -22,7 +22,6 @@
 package org.boskoi.android;
 
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Vector;
 
 import org.boskoi.android.data.CategoriesData;
@@ -89,8 +88,6 @@ public class CategoryList extends ListActivity {//implements ListView.OnScrollLi
 		categories = new String[0];
     	hmCategories = new HashMap<String, CategoriesData>();
     	hmParentCategories = new HashMap<Integer, CategoriesData>();
-    	
-	    Locale locale = this.getBaseContext().getResources().getConfiguration().locale;
 
     	
 	for(CategoriesData cat : BoskoiService.getParentCategories()){
@@ -102,7 +99,7 @@ public class CategoryList extends ListActivity {//implements ListView.OnScrollLi
 
    			
    			int i = 0;
-   			for(CategoriesData childCat : BoskoiService.getCategoriesFromParent(cat.getCategoryId(), locale)){
+   			for(CategoriesData childCat : BoskoiService.getCategoriesFromParent(cat.getCategoryId())){
    				childStrings[i] = childCat.getCategoryTitle() + " ("+childCat.getCategoryTitleLA()+")";
    				englishStrings[i] = childCat.getCategoryTitle();
    				i++;

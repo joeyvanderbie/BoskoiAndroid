@@ -187,9 +187,7 @@ public class ListIncidents extends Activity
         title.setTextColor(Color.parseColor(getText(R.string.title_string).toString()));//Color.rgb(144, 80, 62));
 
         //get full category names from db based on the id's found in the incident
-        Locale locale = this.getBaseContext().getResources().getConfiguration().locale;
-        
-        CategoriesData[] categories = BoskoiService.getCategoriesDetails(inci.getIncidentCategories(), locale);
+        CategoriesData[] categories = BoskoiService.getCategoriesDetails(inci.getIncidentCategories(), BoskoiService.language);
         String categ = "";
         for (CategoriesData cate : categories){
         	categ = categ + cate.getCategoryTitle() + " (" + cate.getCategoryTitleLA()+"), ";      		
@@ -202,12 +200,7 @@ public class ListIncidents extends Activity
         for (CategoriesData cate : categories){
         	if(!cate.getCategoryTitle().equals("Not available")){
 	        	if(!cate.getCategoryTitleLA().equals("")){
-	        		if(locale.equals("Nederlands") || BoskoiService.language.equals("Nederlands")){
-	        			wiki = wiki + "<a href=http://nl.wikipedia.org/w/index.php?title=Special%3ASearch&search="+cate.getCategoryTitleLA().replace(" ", "%20")+">" + cate.getCategoryTitle() +" on Wikipedia</a><br>" ;      		
-	        		}else{
-	        			wiki = wiki + "<a href=http://en.wikipedia.org/w/index.php?title=Special%3ASearch&search="+cate.getCategoryTitleLA().replace(" ", "%20")+">" + cate.getCategoryTitle() +" on Wikipedia</a><br>" ;      		      			
-	        		}	        	}else{
-	        		wiki = wiki + "<a href=http://en.wikipedia.org/w/index.php?title=Special%3ASearch&search="+cate.getCategoryTitle().replace(" ", "%20")+">" + cate.getCategoryTitle() +" on Wikipedia</a><br>" ;   
+	        		wiki = wiki + "<a href=http://"+BoskoiService.language.getLanguage()+".wikipedia.org/w/index.php?title=Special%3ASearch&search="+cate.getCategoryTitle().replace(" ", "%20")+">" + cate.getCategoryTitle() +" on Wikipedia</a><br>" ;   
 	        	}
         	}
         }
@@ -399,7 +392,7 @@ public class ListIncidents extends Activity
 	            reportsTask.execute();
     			return(true);
     		case INCIDENT_LANG:
-    			if(BoskoiService.language.getCountry().equals(Locale.ENGLISH.getCountry()) && BoskoiService.language.getLanguage().equals(Locale.ENGLISH.getLanguage())){
+    			if(BoskoiService.language.getCountry().equals(Locale.US.getCountry()) && BoskoiService.language.getLanguage().equals(Locale.US.getLanguage())){
     				//locale langue is english
     				//switch to dutch
     				BoskoiService.language = new Locale("nl", "NL");
@@ -587,9 +580,8 @@ public class ListIncidents extends Activity
 					d = ImageManager.getImages( thumbnails[0]);
 					
 			        //get full category names from db based on the id's found in the incident (disregard original title)
-			        Locale locale = this.getBaseContext().getResources().getConfiguration().locale;
 			        
-			        CategoriesData[] catdata = BoskoiService.getCategoriesDetails(incidentData.getIncidentCategories(), locale);
+			        CategoriesData[] catdata = BoskoiService.getCategoriesDetails(incidentData.getIncidentCategories(), BoskoiService.language);
 			        String categ = "";
 			        int i =0;
 			        for (CategoriesData cate : catdata){
@@ -630,12 +622,11 @@ public class ListIncidents extends Activity
 			}
 			
 			//set the filtered by string (convert the by id to string)
-			Locale locale = this.getBaseContext().getResources().getConfiguration().locale;
 			
 			CategoriesData catDetails = new CategoriesData();
 			
 			if(!by.equals("All") ){
-				CategoriesData[] cats = BoskoiService.getCategoriesDetails(by, locale);
+				CategoriesData[] cats = BoskoiService.getCategoriesDetails(by, BoskoiService.language);
 				catDetails = cats[0];
 			}else{
 				catDetails.setCategoryTitle("All");

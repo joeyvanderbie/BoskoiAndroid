@@ -62,7 +62,7 @@ public class BoskoiService extends Service {
 	public static String categoriesResponse = "";
 	public static String categoriesLangResponse = "";
 	public static String savePath = "";
-	public static String domain = "http://futuretechnologies.nl/boskoi/";
+	public static String domain = "http://futuretechnologies.nl/boskoi";
 	public static String firstname = "";
 	public static String lastname = "";
 	public static String email = "";

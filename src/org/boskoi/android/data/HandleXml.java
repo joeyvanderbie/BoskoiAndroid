@@ -402,16 +402,20 @@ public class HandleXml {
 				NodeList localeList = element.getElementsByTagName("locale");
 				Element localeElement = (Element) localeList.item(0);
 				
-					NodeList locale = localeElement.getChildNodes();
-					category.setCategoryLocale(((Node) locale.item(0)).getNodeValue());
+				NodeList locale = localeElement.getChildNodes();
+				category.setCategoryLocale(((Node) locale.item(0)).getNodeValue());
 
 				
 				
 				NodeList descElementList = element.getElementsByTagName("description");
 				Element descElement = (Element) descElementList.item(0);
 				
-				NodeList desc = descElement.getChildNodes();
-				category.setCategoryDescription( ((Node) desc.item(0)).getNodeValue());
+				if(descElement.hasChildNodes()){
+					NodeList desc = descElement.getChildNodes();
+					category.setCategoryDescription( ((Node) desc.item(0)).getNodeValue());
+				}else{
+					category.setCategoryDescription("");
+				}
 				
 			}
 			categoriesLangData.add( category );

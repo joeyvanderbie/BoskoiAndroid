@@ -76,7 +76,7 @@ public class Categories {
 		
 		if( statusCode == 200 ) {
 			categories = BoskoiHttpClient.GetText(response);
-			BoskoiService.categoriesResponse = categories;
+			BoskoiService.categoriesLangResponse = categories;
 			return true;
 			
 		} else {
