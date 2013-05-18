@@ -160,8 +160,7 @@ public class HandleXml {
 				incidentData.setIncidentLocLongitude(((Node)locationInnerLongitude.item(0)).getNodeValue());
 				
 				//categories
-				NodeList categoryList = element.getElementsByTagName
-				("category");
+				NodeList categoryList = element.getElementsByTagName("category");
 				for( int w=0; w < categoryList.getLength(); w++ ) { 
 					
 					Node categoryNode = categoryList.item(w);
@@ -343,6 +342,83 @@ public class HandleXml {
 		}
 		
 		return categoriesData;
+	}
+	
+	public static List<CategoriesLangData> processCategoriesLangXml( String xml ) {
+		
+		List<CategoriesLangData> categoriesLangData = new ArrayList<CategoriesLangData>();
+		String categories = "";
+		DocumentBuilder builder = null;
+		Document doc = null;
+		try {
+			builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+		} catch (ParserConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (FactoryConfigurationError e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		try {
+			doc = builder.parse(new InputSource(new StringReader( xml )));
+		} catch (SAXException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		NodeList node = doc.getElementsByTagName("category_lang");
+		for( int i = 0; i < node.getLength(); i++ ) {
+			Node firstNode = node.item(i);
+			CategoriesLangData category = new CategoriesLangData(); 
+			
+			
+			if( firstNode.getNodeType() == Node.ELEMENT_NODE ) {
+				Element element = (Element) firstNode;
+				
+				NodeList idElementList = element.getElementsByTagName("id");
+				Element idElement = (Element) idElementList.item(0);
+				
+				NodeList id = idElement.getChildNodes();
+				category.setCategoryId(Integer.parseInt(((Node) id.item(0)).getNodeValue()));
+
+				NodeList langidElementList = element.getElementsByTagName("lang_id");
+				Element langidElement = (Element) langidElementList.item(0);
+				
+				NodeList langid = langidElement.getChildNodes();
+				category.setCategoryLangId(Integer.parseInt(((Node) langid.item(0)).getNodeValue()));
+				
+				NodeList titleElementList = element.getElementsByTagName("title");
+				Element titleElement = (Element) titleElementList.item(0);
+				
+				NodeList title = titleElement.getChildNodes();
+				category.setCategoryTitle(((Node) title.item(0)).getNodeValue());
+				categories += ((Node) title.item(0)).getNodeValue()+", ";
+				
+				NodeList localeList = element.getElementsByTagName("locale");
+				Element localeElement = (Element) localeList.item(0);
+				
+					NodeList locale = localeElement.getChildNodes();
+					category.setCategoryLocale(((Node) locale.item(0)).getNodeValue());
+
+				
+				
+				NodeList descElementList = element.getElementsByTagName("description");
+				Element descElement = (Element) descElementList.item(0);
+				
+				NodeList desc = descElement.getChildNodes();
+				category.setCategoryDescription( ((Node) desc.item(0)).getNodeValue());
+				
+			}
+			categoriesLangData.add( category );
+
+		}
+		
+		return categoriesLangData;
 	}
 	
 	protected static ImageManager getImageManager() {

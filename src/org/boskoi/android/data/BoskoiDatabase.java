@@ -25,6 +25,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import org.boskoi.android.BoskoiService;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -187,7 +189,8 @@ public class BoskoiDatabase {
 			+ CATEGORY_LANG_ID + " INTEGER PRIMARY KEY ON CONFLICT REPLACE, "
 			+ CATEGORY_ID + " INTEGER, "
 			+ CATEGORY_TITLE + " TEXT NOT NULL, " 
-			+ CATEGORY_LOCALE + " TEXT NOT NULL " 
+			+ CATEGORY_LOCALE + " TEXT NOT NULL, " 
+			+ CATEGORY_DESC + " TEXT " 
 			+ ")";
 	
 	private static final String BLOG_TABLE_CREATE = "CREATE TABLE " +BLOG_TABLE + " ("

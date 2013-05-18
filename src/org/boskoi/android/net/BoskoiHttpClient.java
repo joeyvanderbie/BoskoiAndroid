@@ -59,7 +59,7 @@ public class BoskoiHttpClient {
     final public static List<NameValuePair> blankNVPS = new ArrayList<NameValuePair>();
 	
     public static HttpResponse GetURL(String URL) throws IOException {
-    	BoskoiService.httpRunning = true;
+    	BoskoiService.httpRunning = true; 
 		
 		try {
 			//wrap try around because this constructor can throw Error

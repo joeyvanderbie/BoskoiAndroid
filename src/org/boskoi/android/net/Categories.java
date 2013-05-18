@@ -58,4 +58,32 @@ public class Categories {
 		
 	}
 
+	public static boolean getAllCategoriesLangFromWeb() throws IOException {
+        BoskoiService.tracker.trackPageView("/Categories/CategoriesLangFromWeb");
+		HttpResponse response;
+		String categories = "";
+		
+		StringBuilder uriBuilder = new StringBuilder( BoskoiService.domain);
+		uriBuilder.append("/api?task=categories_lang");
+		uriBuilder.append("&resp=xml");
+		response = BoskoiHttpClient.GetURL( uriBuilder.toString() );
+		
+		if( response == null ) {
+			return false;
+		}
+		
+		final int statusCode = response.getStatusLine().getStatusCode();
+		
+		if( statusCode == 200 ) {
+			categories = BoskoiHttpClient.GetText(response);
+			BoskoiService.categoriesResponse = categories;
+			return true;
+			
+		} else {
+			return false;
+		}
+		
+	}
+
+	
 }

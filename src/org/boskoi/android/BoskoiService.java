@@ -60,8 +60,9 @@ public class BoskoiService extends Service {
 	public static Vector<String> mNewIncidentsImages = new Vector<String>();
 	public static String incidentsResponse = "";
 	public static String categoriesResponse = "";
+	public static String categoriesLangResponse = "";
 	public static String savePath = "";
-	public static String domain = "http://boskoi.org";
+	public static String domain = "http://futuretechnologies.nl/boskoi/";
 	public static String firstname = "";
 	public static String lastname = "";
 	public static String email = "";
@@ -80,9 +81,8 @@ public class BoskoiService extends Service {
 	public static long blogLastUpdate = 0;
 	public static String lastUpdate = "1970-01-01 00:00:00"; // default value
 	public static long updateInterval = 24 * 60 * 60 * 1000; // currently 24
-	public static Locale defaultLocale = Locale.US;
 	// hours
-	public static String language = "english";
+	public static Locale language = Locale.getDefault();
 	public static int numberOfNewReports = 0;
 	private Handler mHandler = new Handler();
 	public static String lastVersion = "";
@@ -242,7 +242,6 @@ public class BoskoiService extends Service {
 				PREFS_NAME, 0);
 		savePath = "/data/data/org.boskoi.android/files/";// settings.getString("savePath","/data/data/com.boskoi.android.app/files/");
 		// domain = settings.getString("Domain", "");
-		domain = "http://boskoi.org";
 		firstname = settings.getString("Firstname", "");
 		lastname = settings.getString("Lastname", "");
 		lastUpdate = settings.getString("LastUpdate", "");
@@ -255,7 +254,7 @@ public class BoskoiService extends Service {
 		smsUpdate = settings.getBoolean("SmsUpdate", false);
 		username = settings.getString("Username", "");
 		password = settings.getString("Password", "");
-		language = settings.getString("Language", "");
+		language = new Locale(settings.getString("Language", "en"), settings.getString("LanguageCountry", "US"));
 		lastVersion = settings.getString("LastVersion", "");
 		blogLastUpdate = settings.getLong("BlogLastUpdate", 0);
 
@@ -280,7 +279,8 @@ public class BoskoiService extends Service {
 		editor.putString("Firstname", firstname);
 		editor.putString("Lastname", lastname);
 		editor.putString("LastUpdate", lastUpdate);
-		editor.putString("Language", language);
+		editor.putString("Language", language.getLanguage());
+		editor.putString("LanguageCountry", language.getCountry());
 		editor.putString("LastVersion", lastVersion);
 
 		if (Util.validateEmail(settings.getString("Email", ""))) {
@@ -330,7 +330,7 @@ public class BoskoiService extends Service {
 	}
 
 	public static CategoriesData[] getParentCategories(){
-		return getParentCategories(defaultLocale);
+		return getParentCategories(language);
 	}
 	
 	public static CategoriesData[] getParentCategories(Locale locale) {
@@ -375,7 +375,7 @@ public class BoskoiService extends Service {
 	}
 	
 	public static CategoriesData[] getCategoriesDetails(String categoryIds) {
-		return getCategoriesDetails( categoryIds,  defaultLocale) ;
+		return getCategoriesDetails( categoryIds,  language) ;
 	}
 
 	public static CategoriesData[] getCategoriesDetails(String categoryIds, Locale locale) {
@@ -425,7 +425,7 @@ public class BoskoiService extends Service {
 	}
 
 	public static CategoriesData[] getCategoriesFromParent(int categoryId) {
-		return getCategoriesFromParent(categoryId, defaultLocale);
+		return getCategoriesFromParent(categoryId, language);
 	}
 	
 	public static CategoriesData[] getCategoriesFromParent(int categoryId, Locale locale) {

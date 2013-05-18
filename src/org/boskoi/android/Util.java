@@ -22,40 +22,34 @@
 package org.boskoi.android;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Vector;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.http.HttpResponse;
 import org.boskoi.android.data.BoskoiDatabase;
 import org.boskoi.android.data.CategoriesData;
+import org.boskoi.android.data.CategoriesLangData;
 import org.boskoi.android.data.HandleXml;
 import org.boskoi.android.data.IncidentsData;
 import org.boskoi.android.net.BoskoiHttpClient;
 import org.boskoi.android.net.Categories;
-import org.boskoi.android.net.Geocoder;
 import org.boskoi.android.net.Incidents;
-
-import android.app.Activity;
-import android.content.Context;
-import android.database.Cursor;
-import android.graphics.Typeface;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.util.Log;
-import android.widget.Toast;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import android.content.Context;
+import android.database.Cursor;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.widget.Toast;
 
 
 
@@ -64,6 +58,7 @@ public class Util{
 	private static NetworkInfo networkInfo;
 	private static List<IncidentsData> mNewIncidents;
 	private static List<CategoriesData> mNewCategories;
+	private static List<CategoriesLangData> mNewCategoriesLang;
 	private static JSONObject jsonObject;
 	private static List mOldIncidents = new ArrayList<IncidentsData>();
  
@@ -330,6 +325,12 @@ public class Util{
 				} else {
 					return 1;
 				}
+				if(Categories.getAllCategoriesLangFromWeb()) {
+					
+					mNewCategoriesLang = HandleXml.processCategoriesLangXml(BoskoiService.categoriesLangResponse); 
+				} else {
+					return 1;
+				}
 				  String timeLastUpdated = BoskoiService.lastUpdate;
 				  if(BoskoiApplication.mDb.fetchAllIncidentsCount() == 0){
 					  BoskoiService.lastUpdate = "1970-01-01 00:00:00";
@@ -340,6 +341,10 @@ public class Util{
 					
 				} else {
 					return 1;
+				}
+				
+				if(mNewCategoriesLang != null){
+					 BoskoiApplication.mDb.addCategoriesLang(mNewCategoriesLang);
 				}
 				
 				if(mNewCategories != null && mNewIncidents != null ) {

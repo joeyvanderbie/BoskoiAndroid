@@ -399,40 +399,28 @@ public class ListIncidents extends Activity
 	            reportsTask.execute();
     			return(true);
     		case INCIDENT_LANG:
-    			if(BoskoiService.language.equals("English") || BoskoiService.language.equals("")){
-
-    				BoskoiService.language = "Nederlands";
-    				BoskoiService.saveSettings(this.getBaseContext());
-	                Toast.makeText(this, "Nederlands", Toast.LENGTH_LONG).show();
-	                 
-	                //force refresh
-	                Intent refreshIntent = new Intent(ListIncidents.this, IncidentsTab.class);
-					Bundle tab = new Bundle();
-					tab.putInt("tab_index", 1);
-					refreshIntent.putExtra("tab", tab);
-
-					ListIncidents.this.startActivityForResult(refreshIntent, 5);
-					finish();
-
-
+    			if(BoskoiService.language.getCountry().equals(Locale.ENGLISH.getCountry()) && BoskoiService.language.getLanguage().equals(Locale.ENGLISH.getLanguage())){
+    				//locale langue is english
+    				//switch to dutch
+    				BoskoiService.language = new Locale("nl", "NL");
     			}else{
-    				
-    				BoskoiService.language = "English";
-    				BoskoiService.saveSettings(this.getBaseContext());
-	                Toast.makeText(this, "English", Toast.LENGTH_LONG).show();
-
-	                //force refresh
-	                Intent refreshIntent = new Intent(ListIncidents.this, IncidentsTab.class);
-					Bundle tab = new Bundle();
-					tab.putInt("tab_index", 1);
-					refreshIntent.putExtra("tab", tab);
-
-					ListIncidents.this.startActivityForResult(refreshIntent, 5);
-					finish();
-
-
+    				//switch back to english
+    				BoskoiService.language = new Locale("en", "US");
     			}
-              
+    			
+
+				BoskoiService.saveSettings(this.getBaseContext());
+                Toast.makeText(this, BoskoiService.language.getDisplayLanguage(), Toast.LENGTH_LONG).show();
+
+                //force refresh
+                Intent refreshIntent = new Intent(ListIncidents.this, IncidentsTab.class);
+				Bundle tab = new Bundle();
+				tab.putInt("tab_index", 1);
+				refreshIntent.putExtra("tab", tab);
+
+				ListIncidents.this.startActivityForResult(refreshIntent, 5);
+				finish();
+    			
     			return(true);	
         
 		}
