@@ -50,6 +50,7 @@ import android.os.Binder;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.SystemClock;
+import android.util.Log;
 
 import com.google.android.apps.analytics.GoogleAnalyticsTracker;
 
@@ -649,6 +650,9 @@ public class BoskoiService extends Service {
 	
 	public static int getColorForIncident(IncidentsData incident){
 		try{
+			/*TODO adding the colors this way is very inefficient, should make a hashmap of the colors
+			 * and than match the category id's with this hashmap, maybe even better reuse the colored icon*/
+			
 			int end = incident.getIncidentCategories().indexOf(',')>-1?incident.getIncidentCategories().indexOf(','):incident.getIncidentCategories().length();
 			String category = incident.getIncidentCategories().substring(0, end);
 			String color = "#"+getCategoriesDetails(category)[0].getCategoryColor();
@@ -658,6 +662,9 @@ public class BoskoiService extends Service {
 			e.printStackTrace();
 			return R.drawable.marker_color;
 		}catch(NumberFormatException e){
+			e.printStackTrace();
+			return R.drawable.marker_color;
+		}catch(IllegalArgumentException e){
 			e.printStackTrace();
 			return R.drawable.marker_color;
 		}

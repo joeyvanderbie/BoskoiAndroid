@@ -238,7 +238,6 @@ public class HandleXml {
 	public static List<CategoriesData> processCategoriesXml( String xml ) {
 		
 		List<CategoriesData> categoriesData = new ArrayList<CategoriesData>();
-		String categories = "";
 		DocumentBuilder builder = null;
 		Document doc = null;
 		try {
@@ -291,8 +290,6 @@ public class HandleXml {
 				
 				NodeList title = titleElement.getChildNodes();
 				category.setCategoryTitle(((Node) title.item(0)).getNodeValue());
-				categories += ((Node) title.item(0)).getNodeValue()+", ";
-				
 		
 				try{
 //				NodeList titleNLElementList = element.getElementsByTagName("titlenl");
@@ -347,7 +344,7 @@ public class HandleXml {
 	public static List<CategoriesLangData> processCategoriesLangXml( String xml ) {
 		
 		List<CategoriesLangData> categoriesLangData = new ArrayList<CategoriesLangData>();
-		String categories = "";
+	
 		DocumentBuilder builder = null;
 		Document doc = null;
 		try {
@@ -397,7 +394,6 @@ public class HandleXml {
 				
 				NodeList title = titleElement.getChildNodes();
 				category.setCategoryTitle(((Node) title.item(0)).getNodeValue());
-				categories += ((Node) title.item(0)).getNodeValue()+", ";
 				
 				NodeList localeList = element.getElementsByTagName("locale");
 				Element localeElement = (Element) localeList.item(0);

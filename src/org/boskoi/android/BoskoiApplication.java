@@ -22,13 +22,16 @@
 package org.boskoi.android;
 
 import java.util.HashSet;
+import java.util.Locale;
 
 import org.boskoi.android.data.BoskoiDatabase;
 import org.boskoi.android.net.BoskoiHttpClient;
 
-
 import android.app.Application;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.database.Cursor;
+import android.preference.PreferenceManager;
 
 public class BoskoiApplication extends Application {
 	
@@ -37,15 +40,34 @@ public class BoskoiApplication extends Application {
 	  public static ImageManager mImageManager;
 	  public static BoskoiDatabase mDb; 
 	  public static BoskoiHttpClient mApi;
+      private Locale locale = null;
 
 	  @Override
 	  public void onCreate() {
 	    super.onCreate();
 
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
+
+        Configuration config = getBaseContext().getResources().getConfiguration();
+
+        String lang = settings.getString("Language", "");
+        String langCountry = settings.getString("LanguageCountry", "");
+        if (! "".equals(lang) && (! config.locale.getLanguage().equals(lang) || !config.locale.getCountry().equals(langCountry)))
+        {
+            locale = new Locale(lang, langCountry);
+            Locale.setDefault(locale);
+            config.locale = locale;
+            getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+        }
+	    
+	    
 	    mImageManager = new ImageManager();
 	    mDb = new BoskoiDatabase(this);
 	    mDb.open();
 	    mApi = new BoskoiHttpClient();
+	    
+	    
+	    
 	    
 	  }
 
@@ -86,4 +108,19 @@ public class BoskoiApplication extends Application {
 	    
 		  //mImageManager.cleanup(keepers);
 	  }
+
+	      @Override
+	      public void onConfigurationChanged(Configuration newConfig)
+	      {
+	          super.onConfigurationChanged(newConfig);
+	          if (locale != null)
+	          {
+	              SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
+	              String lang = settings.getString("Language", "");
+	              String langCountry = settings.getString("LanguageCountry", "");
+	              newConfig.locale = new Locale(lang, langCountry);
+	              Locale.setDefault(locale);
+	              getBaseContext().getResources().updateConfiguration(newConfig, getBaseContext().getResources().getDisplayMetrics());
+	          }
+	      }
 }

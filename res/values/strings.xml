@@ -19,6 +19,7 @@
   Boskoi developers at developer@boskoi.org.
  -->
 <resources>
+    
 	<!-- Colors -->
     <string name="title_string">#7ba42b</string>
     <string name="verified_string">#7ba42b</string>
@@ -140,6 +141,7 @@
     <string name="alert_dialog_error_msg">An error occurred fetching the reports. Make sure you entered an Ushahidi instance.</string>
 	
 	<!--  Settings -->
+
 	<string name="menu_settings">Settings</string>
 	<string name ="basic_settings">Basic settings</string>
 	<string name="advanced_settings">Advanced settings</string>

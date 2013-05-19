@@ -330,7 +330,7 @@ public class IncidentMap extends MapActivity {
 
 		private static final int BOSKOI_ID = 1;
 		public NotificationManager mNotificationManager;
-		private int icon = R.drawable.icon;
+		private int icon = R.drawable.notification_icon;
 		private String ns = Context.NOTIFICATION_SERVICE;
 
 		@Override

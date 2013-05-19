@@ -86,7 +86,6 @@ public class SimpleCategoryList extends ListActivity {//implements ListView.OnSc
 //			Collections.shuffle(list);
 	
 	categories = Util.joinStringArray(categories, newCatAll);
-	Locale locale = this.getBaseContext().getResources().getConfiguration().locale;
    	
    	for(CategoriesData cat : BoskoiService.getParentCategories()){
    		
@@ -97,7 +96,7 @@ public class SimpleCategoryList extends ListActivity {//implements ListView.OnSc
    			
    			
    			int i = 0;
-   			for(CategoriesData childCat : BoskoiService.getCategoriesFromParent(cat.getCategoryId(), locale)){
+   			for(CategoriesData childCat : BoskoiService.getCategoriesFromParent(cat.getCategoryId())){
    					childStrings[i] = childCat.getCategoryTitle() + " ("+childCat.getCategoryTitleLA()+")";
    				englishStrings[i] = childCat.getCategoryId()+"";
    				i++;
@@ -119,7 +118,7 @@ public class SimpleCategoryList extends ListActivity {//implements ListView.OnSc
 				categories = Util.joinStringArray(categories, englishStrings);
 	
 	    		//here we also need to set the array with real CatData
-	    		for(CategoriesData childCat : BoskoiService.getCategoriesFromParent(cat.getCategoryId(), locale)){
+	    		for(CategoriesData childCat : BoskoiService.getCategoriesFromParent(cat.getCategoryId())){
 	        		hmCategories.put(childCat.getCategoryTitle(), childCat);
 	    		}
 	    		hmParentCategories.put(cat.getCategoryId(), cat);

@@ -32,7 +32,7 @@
  	
  	<uses-sdk android:minSdkVersion="4" android:targetSdkVersion="7"/>
     <application 
-    	android:icon="@drawable/icon"
+    	android:icon="@drawable/ic_launcher"
     	android:label="@string/app_name" 
     	android:name="BoskoiApplication" 
     	android:theme="@style/BoskoiTheme" android:debuggable="true">
