@@ -404,7 +404,7 @@ public class BoskoiDatabase {
 	  	String where[] = new String[1];
 	  	where[0] = CATEGORY_LOCALE+"="+locale;
 	  
-	    return mDb.query(CATEGORIES_LANG_TABLE, CATEGORIES_LANG_COLUMNS, null, where, null, null, CATEGORY_ID
+	    return mDb.query(CATEGORIES_LANG_TABLE, CATEGORIES_LANG_COLUMNS, null, where, null, null, CATEGORY_TITLE
 	        + " ASC");
 	  }
 
@@ -447,7 +447,8 @@ public class BoskoiDatabase {
 			+ CATEGORIES_LANG_TABLE+"."+CATEGORY_LOCALE+" AS "+CATEGORY_LOCALE+" "+
 			" FROM "+CATEGORIES_LANG_TABLE+" LEFT OUTER JOIN "+CATEGORIES_TABLE
 			+" ON ("+CATEGORIES_LANG_TABLE+"."+CATEGORY_ID+"="+CATEGORIES_TABLE+"."+CATEGORY_ID+" ) "
-			+" WHERE "+ CATEGORIES_LANG_TABLE+"."+CATEGORY_LOCALE+"= '"+locale.getLanguage()+"_"+locale.getCountry()+"' AND "+CATEGORIES_LANG_TABLE+"."+CATEGORY_TITLE+" IS NOT NULL";
+			+" WHERE "+ CATEGORIES_LANG_TABLE+"."+CATEGORY_LOCALE+"= '"+locale.getLanguage()+"_"+locale.getCountry()+"' AND "+CATEGORIES_LANG_TABLE+"."+CATEGORY_TITLE+" IS NOT NULL "
+			+"ORDER BY "+CATEGORY_TITLE+ " ASC";
 		
 		 return mDb.rawQuery(sql, null );
   }
@@ -511,7 +512,8 @@ public class BoskoiDatabase {
 			+ CATEGORIES_LANG_TABLE+"."+CATEGORY_LOCALE+" AS "+CATEGORY_LOCALE+" "+
 			" FROM "+CATEGORIES_LANG_TABLE+" LEFT OUTER JOIN "+CATEGORIES_TABLE
 			+" ON ("+CATEGORIES_LANG_TABLE+"."+CATEGORY_ID+"="+CATEGORIES_TABLE+"."+CATEGORY_ID+" ) "
-			+" WHERE "+ CATEGORIES_LANG_TABLE+"."+CATEGORY_LOCALE+"= '"+locale.getLanguage()+"_"+locale.getCountry()+"' AND "+CATEGORIES_TABLE+"."+CATEGORY_PARENT_ID+" = "+parentId+" AND "+CATEGORIES_LANG_TABLE+"."+CATEGORY_TITLE+" IS NOT NULL";
+			+" WHERE "+ CATEGORIES_LANG_TABLE+"."+CATEGORY_LOCALE+"= '"+locale.getLanguage()+"_"+locale.getCountry()+"' AND "+CATEGORIES_TABLE+"."+CATEGORY_PARENT_ID+" = "+parentId+" AND "+CATEGORIES_LANG_TABLE+"."+CATEGORY_TITLE+" IS NOT NULL"
+			+" ORDER BY "+CATEGORY_TITLE+ " ASC";
 		Log.d("query", sql);
 		 return mDb.rawQuery(sql,null );
 	  
@@ -574,7 +576,8 @@ public class BoskoiDatabase {
 				+ CATEGORIES_LANG_TABLE+"."+CATEGORY_LOCALE+" AS "+CATEGORY_LOCALE+" "+
 				" FROM "+CATEGORIES_LANG_TABLE+" LEFT OUTER JOIN "+CATEGORIES_TABLE
 				+" ON ("+CATEGORIES_LANG_TABLE+"."+CATEGORY_ID+"="+CATEGORIES_TABLE+"."+CATEGORY_ID+" ) "
-				+" WHERE "+ CATEGORIES_LANG_TABLE+"."+CATEGORY_LOCALE+"= '"+locale.getLanguage()+"_"+locale.getCountry()+"' AND "+CATEGORIES_LANG_TABLE+"."+CATEGORY_ID+" = "+id+" AND "+CATEGORIES_LANG_TABLE+"."+CATEGORY_TITLE+" IS NOT NULL";
+				+" WHERE "+ CATEGORIES_LANG_TABLE+"."+CATEGORY_LOCALE+"= '"+locale.getLanguage()+"_"+locale.getCountry()+"' AND "+CATEGORIES_LANG_TABLE+"."+CATEGORY_ID+" = "+id+" AND "+CATEGORIES_LANG_TABLE+"."+CATEGORY_TITLE+" IS NOT NULL"
+				+" ORDER BY "+CATEGORY_TITLE+ " ASC";
 			
 			 return mDb.rawQuery(sql, null );
 		  	}else{
