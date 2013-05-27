@@ -50,6 +50,7 @@ import android.os.Binder;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.SystemClock;
+import android.test.IsolatedContext;
 import android.util.Log;
 
 import com.google.android.apps.analytics.GoogleAnalyticsTracker;
@@ -255,7 +256,10 @@ public class BoskoiService extends Service {
 		smsUpdate = settings.getBoolean("SmsUpdate", false);
 		username = settings.getString("Username", "");
 		password = settings.getString("Password", "");
-		language = new Locale(settings.getString("Language", "en"), settings.getString("LanguageCountry", "US"));
+		if(language.getCountry().equals("") ){
+			language = Locale.US;
+		}
+		language = new Locale(settings.getString("Language", language.getLanguage()), settings.getString("LanguageCountry", language.getCountry()));
 		lastVersion = settings.getString("LastVersion", "");
 		blogLastUpdate = settings.getLong("BlogLastUpdate", 0);
 

@@ -50,3 +50,5 @@ bin/res/drawable/boskoi_tab_report_selected.png
 bin/classes/org/boskoi/android/About$ReportsTask.class
 
 bin/classes/org/boskoi/android/AddIncident$10.class
+
+.DS_Store
