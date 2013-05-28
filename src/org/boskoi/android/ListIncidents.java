@@ -30,6 +30,7 @@ import org.boskoi.android.data.BoskoiDatabase;
 import org.boskoi.android.data.CategoriesData;
 import org.boskoi.android.data.IncidentsData;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.Notification;
@@ -46,8 +47,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.DialogFragment;
-import android.support.v4.app.FragmentActivity;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.view.ContextMenu;
@@ -67,7 +66,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
  
-public class ListIncidents extends FragmentActivity
+public class ListIncidents extends Activity
 {
   
 	/** Called when the activity is first created. */
@@ -377,7 +376,7 @@ public class ListIncidents extends FragmentActivity
 		i = menu.add( Menu.NONE, INCIDENT_REFRESH, Menu.NONE, R.string.incident_menu_refresh );
 		i.setIcon(R.drawable.boskoi_refresh);
 		i = menu.add( Menu.NONE, INCIDENT_LANG, Menu.NONE, R.string.incident_menu_lang );
-		i.setIcon(R.drawable.boskoi_language);
+		i.setIcon(R.drawable.boskoi_menu_language);
 	  
 	}
   
@@ -392,10 +391,25 @@ public class ListIncidents extends FragmentActivity
     			return(true);
     		case INCIDENT_LANG:
 
-    			
-    			 DialogFragment newFragment = CategoryLanguageAlertDialogFragment.newInstance(
-    					 R.string.incident_menu_lang);
-    		        newFragment.show(getSupportFragmentManager(), "dialog");
+    			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+    			builder.setTitle(getString(R.string.incident_switch_language));
+    			builder.setItems(R.array.languages_arr, new DialogInterface.OnClickListener() {
+    			    public void onClick(DialogInterface dialog, int item) {
+    			    	 switch(item){
+                    	 case 0:
+                    		 ListIncidents.this.setCategoryLanuage(Locale.US);
+                    		 break;
+                    	 case 1:
+                    		 ListIncidents.this.setCategoryLanuage(new Locale("nl", "NL"));
+                    		 break;
+                    	 case 2:
+                    		 ListIncidents.this.setCategoryLanuage(new Locale("da", "DK"));
+                    		 break;
+                    	 }
+    			    }
+    			});
+    			AlertDialog alert = builder.create();
+    			alert.show();
     			
     			return(true);	
         
@@ -417,7 +431,7 @@ public class ListIncidents extends FragmentActivity
 		BoskoiService.language = language;
 		
 		BoskoiService.saveSettings(this.getBaseContext());
-	    Toast.makeText(this, R.string.incident_switch_language + BoskoiService.language.getLanguage(), Toast.LENGTH_LONG).show();
+	    Toast.makeText(this,getString( R.string.incident_switch_language), Toast.LENGTH_LONG).show();
 	
 	    //force refresh
 	    Intent refreshIntent = new Intent(ListIncidents.this, IncidentsTab.class);
@@ -695,41 +709,6 @@ public class ListIncidents extends FragmentActivity
 			return i;
 		}
 		
-    }
-  
-    public static class CategoryLanguageAlertDialogFragment extends DialogFragment {
-
-        public static CategoryLanguageAlertDialogFragment newInstance(int title) {
-        	CategoryLanguageAlertDialogFragment frag = new CategoryLanguageAlertDialogFragment();
-            Bundle args = new Bundle();
-            args.putInt("title", title);
-            frag.setArguments(args);
-            return frag;
-        }
-
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setTitle(R.string.incident_menu_lang)
-                   .setItems(R.array.languages, new DialogInterface.OnClickListener() {
-                       public void onClick(DialogInterface dialog, int which) {
-                       // The 'which' argument contains the index position
-                       // of the selected item
-                    	 switch(which){
-                    	 case 0:
-                    		 ((ListIncidents)getActivity()).setCategoryLanuage(Locale.US);
-                    		 break;
-                    	 case 1:
-                    		 ((ListIncidents)getActivity()).setCategoryLanuage(new Locale("nl", "NL"));
-                    		 break;
-                    	 case 2:
-                    		 ((ListIncidents)getActivity()).setCategoryLanuage(new Locale("da", "DK"));
-                    		 break;
-                    	 }
-                   }
-            });
-            return builder.create();
-        }
     }
     
     

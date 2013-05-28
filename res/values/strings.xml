@@ -64,7 +64,7 @@
 	<string name="incident_description">Description</string>
 	<string name="incident_title">Title</string>
 	<string name="incident_category">Edibles</string>
-	<string name="incident_switch_language">Switching language to </string>
+	<string name="incident_switch_language">Switching language</string>
 	<string name="incident_add_category">Select edible type(s)</string>
 	<string name="incident_photo">Photos</string>
 	<string name="optional">Optional</string>	

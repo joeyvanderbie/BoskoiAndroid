@@ -50,8 +50,6 @@ import android.os.Binder;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.SystemClock;
-import android.test.IsolatedContext;
-import android.util.Log;
 
 import com.google.android.apps.analytics.GoogleAnalyticsTracker;
 

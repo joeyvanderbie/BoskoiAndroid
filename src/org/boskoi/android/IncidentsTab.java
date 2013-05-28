@@ -21,16 +21,13 @@
 
 package org.boskoi.android;
 
-import org.boskoi.android.R;
-
 import android.app.TabActivity;
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Window;
 import android.widget.TabHost;
 import android.widget.TabHost.OnTabChangeListener;
-import android.content.Intent;
-import android.graphics.Color;
 
 
 public class IncidentsTab extends TabActivity {

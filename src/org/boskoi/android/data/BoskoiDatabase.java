@@ -514,7 +514,7 @@ public class BoskoiDatabase {
 			+" ON ("+CATEGORIES_LANG_TABLE+"."+CATEGORY_ID+"="+CATEGORIES_TABLE+"."+CATEGORY_ID+" ) "
 			+" WHERE "+ CATEGORIES_LANG_TABLE+"."+CATEGORY_LOCALE+"= '"+locale.getLanguage()+"_"+locale.getCountry()+"' AND "+CATEGORIES_TABLE+"."+CATEGORY_PARENT_ID+" = "+parentId+" AND "+CATEGORIES_LANG_TABLE+"."+CATEGORY_TITLE+" IS NOT NULL"
 			+" ORDER BY "+CATEGORY_TITLE+ " ASC";
-		Log.d("query", sql);
+		//Log.d("query", sql);
 		 return mDb.rawQuery(sql,null );
 	  
 //	  	if(!locale.equals(defaultLocale))

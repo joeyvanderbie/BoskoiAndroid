@@ -19,7 +19,7 @@
   Boskoi developers at developer@boskoi.org.
  -->
 <resources>
-    <array name="languages">
+    <array name="languages_arr">
         <item>English</item>
         <item>Dutch </item>
         <item>Danish</item>
