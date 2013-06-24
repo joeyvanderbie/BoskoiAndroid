@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  
+  Copyright (c) 2010-2013 Boskoi
+  All rights reserved
+  Contact: developer@boskoi.org
+  Developers: Joey van der Bie, Maarten van der Mark and Vincent Vijn
+  Website: http://www.boskoi.org
+  
+  GNU Lesser General Public License Usage
+  This file may be used under the terms of the GNU Lesser
+  General Public License version 3 as published by the Free Software
+  Foundation and appearing in the file LICENSE.LGPL included in the
+  packaging of this file. Please review the following information to
+  ensure the GNU Lesser General Public License version 3 requirements
+  will be met: http://www.gnu.org/licenses/lgpl.html.	
+ 	
+ 
+  If you have questions regarding the use of this file, please contact
+  Boskoi developers at developer@boskoi.org.
+ -->
+<resources>
+    
+    <!-- Titles -->
+    <string name="title">Boskoi Logo her</string>
+    <string name="add_incident">Boskoi | Tilføj Rapporten</string>
+    <string name="view_incident">Boskoi | Se Rapporten</string>
+    <string name="incident_details">Boskoi | Rapportdetaljer</string>
+    <string name="app_settings">Boskoi | Indstillinger </string>
+    <string name="boskoi_about">Boskoi | Om </string>
+    <string name="boskoi_find">Boskoi | Find </string>
+    <string name="boskoi_sync">Boskoi | Synkroniser </string>
+    <string name="boskoi_splash_screen">Boskoi | Splash Screen"</string>
+	<string name="menu_home">Hjem</string>
+	<string name="menu_sync">Synk</string>
+	<string name="boskoi_map">Kort</string>
+	<string name="boskoi_list">Liste</string>
+	<string name="boskoi_report">Rapporter</string>
+
+    <string name="app_name">Boskoi</string>
+	<string name="reports">Boskoi</string>
+	
+	<!-- Strings -->
+    <string name="date_time">Begivenhed Overskrift</string>
+    <string name="prompt_mesg">Vælg en spiselig art filtrere</string>
+    <string name="str_post_photos">Tilføj et foto</string>
+    <string name="add_categories">Vælg spiselig(e)</string>
+    <string name="choose_method">Vælg metode</string>
+    <string name="choose_pictures_method">Vælg hvordan du vil tage et billede</string>
+    <string name="preferences_notifications">Bemærkninger</string>
+    <string name="new_incidents">{0} Nye rapporter </string>
+	<string name="new_categories">{0} Nye spiselige </string>
+	<string name="incident_date_change">Skift dato</string>
+	<string name="incident_date">Dato</string>
+	<string name="incident_current_date">august 23, 2010</string>
+	<string name="incident_time">kl 09:34 PM</string>
+	<string name="incident_verified">Verificeret</string>
+	<string name="incident_unverified">Ikke verificeret</string>
+	<string name="incident_location">Placering</string>
+	<string name="incident_description">Beskrivelse</string>
+	<string name="incident_title">Overskrift</string>
+	<string name="incident_category">Spiselige</string>
+	<string name="incident_add_category">Vælg spiselige type(r)</string>
+	<string name="incident_photo">Billeder</string>
+	<string name="optional">Valgfri</string>	
+	<string name="notification_title">Boskoi tjeneste i baggrunden</string>
+	<string name="add_tip">Hold fingeren på kortet hvis du vil tilføje en rapport</string>
+    
+	<!-- Buttons -->
+	<string name="incident_menu_map">Se Kort</string>
+	<string name="incident_menu_refresh">Opdater</string>
+	<string name="incident_menu_lang">Kategori Sprog</string>
+    <string name="btn_country">Standard Placering</string>
+    <string name="btn_confirm">Gem</string>
+    <string name="btn_zoom">Zoom</string>
+    <string name="btn_details">Detaljer</string>
+    <string name="btn_navigate">Naviger til</string>
+    <string name="btn_gallery">Billeder</string>
+    <string name="btn_camera">Kamera</string>
+    <string name="btn_save">Gem</string>
+    <string name="btn_back">Tilbage</string>
+    <string name="btn_find">Find mig</string>
+    <string name="btn_reset">Opdater</string>
+    <string name="btn_ok">Ok</string>
+    <string name="btn_add_photo">Tilføj et foto</string>
+    <string name="btn_cancel">Annuller</string>
+    <string name="btn_send">Send</string>
+    <string name="add_location">Tilføj en placering</string>
+    <string name="change_location">Skift placering</string>
+	<string name="view_map">Vis på kort</string>
+	<string name="txt_about_btn">Om</string>
+	<string name="incident_filter_category">Filtreret efter:</string>
+	<string name="incident_menu_add">Tilføj rapport</string>
+	<string name="incident_menu_satelite">Satelite/Kort-model</string>
+	<string name="incident_list">Se rapporter</string>
+	
+    <!-- Toasts -->
+    <string name="toast_photos">Billede tilføjet</string>
+    <string name="invalid_email_address">En ugyldig e-mailadresse blev indtastet</string>
+    <string name="invalid_boskoi_instance">Den indtastede webadresse ligner ikke en Boskoi eller Ushahidi instans</string>
+    <string name="sms_to_boskoi_failed">Kunne ikke skrive SMS til Boskoi. Sørg for at brugernavn og kodeord er korrekte</string>
+	<string name="instructions">Tryk på din placering på kortet. Du kan trykke med fingeren for at flytte markøren.</string>
+	<string name="hint_sms_send">Det betyder, at alle indkommende sms vil blive sendt til Boskoi</string>
+	<string name="hint_auto_fetch">Boskoi henter automatisk nye rapporter.</string>
+	<string name="hint_auto_update_delay">Indstil, hvor ofte Boskoi synkroniserer med den valgte instans.</string>
+		<!--  Add location screen -->
+	<string name="find_location">Finder din placering</string>
+	<string name="found_location">Fundet din placering</string>
+	<string name="location_not_found">Stedet kan i øjeblikket ikke bestemmes. Aktiver flere placeringskilder dvs. GPS Satellitter i Sikkerhed og placering på Indstillinger.</string>
+	<string name="loc_not_found">Din placering kunne ikke bestemmes. Sørg for at du har lokalisere den nøjagtige placering på kortet.</string>
+	<string name="no_reports_found">Der blev ikke fundet rapporter</string>
+	<string name="retrieving_reports">Henter nye rapporter</string>
+	<string name="retrieved_reports">Hentet nye rapporter</string>
+		<!-- Add Report Screen -->
+	<string name="report_successfully_added_online">Rapporter er succesfuldt lagt online og afventer godkendelse.</string>
+	<string name="report_successfully_added_offline">Rapporter sendt til lokal lagring på grund af manglende adgang til internettet. Husk at synkronisere til online eksempel når der er internetforbindelse.</string>
+	<string name="failed_to_add_report_offline">Kunne ikke tilføje rapport. Kontroller om du har udfyldt alle obligatoriske felter.</string>
+	<string name="failed_to_add_report_online">Tilslutning mislykkedes, kan ikke indsende din rapport.</string>
+	<string name="empty_report_title">Indtast en titel på din rapport.</string>
+	<string name="empty_report_description">Indtast en beskrivelse af din rapport.</string>
+	<string name="empty_report_location">Beskrivelsen af placeringen skal være på mindst 3 tegn</string>
+	<string name="empty_report_categories">Vælg mindst én spiselig form</string>
+	<string name="not_enough_first_name">Første navn skal være på mindst 3 tegn</string>
+	<string name="not_enough_last_name">Andet navn skal være på mindst 3 karakterer lang</string>
+	<string name="report_not_found_for_category">Ingen rapporter for denne spiselige art fundet</string>
+	<string name="hint_location">Ekstra oplysninger om placering</string>
+	<string name="internet_connection">Netværksfejl, kontroller at du er forbundet til internettet</string>
+		
+    <!-- Alert -->
+    <string name="alert_dialog_ok">OK</string>
+    <string name="alert_dialog_hide">Skjul</string>
+    <string name="alert_dialog_something">Noget</string>
+    <string name="alert_dialog_cancel">Annuller</string>
+    <string name="alert_dialog_error_title">fejl på titel</string>
+    <string name="alert_dialog_error_msg">Der opstod en fejl ved hentning af rapporterne. Sørg for at du har indtastet en Ushahidi instans.</string>
+	
+	<!--  Settings -->
+
+	<string name="menu_settings">Indstillinger</string>
+	<string name ="basic_settings">Grundlæggende indstillinger</string>
+	<string name="advanced_settings">Avancerede indstillinger</string>
+	<string name="hint_advanced_settings">For mere avancerede indstillinger</string>
+	<string name="sms_settings">SMS-indstillinger</string>
+	<string name="txt_clear_cache">Ryd cache</string>
+	<string name="txt_confirm_clear_cache">Er du sikker på at du vil rydde cachen?</string>
+	<string name="option_location">Standardmappe</string>
+	<string name="hint_clear_cache">Ryd alle gemte data</string>
+    <string name="hint_option_location">Det sted, hvor du ønsker at gemme elementer gemt fra den valgte instans.</string>
+	<string name="hint_SD_save_path">Skriv et mappenavn</string>
+	<string name="bg_notification">Baggrund meddelelser</string>
+	<string name="vibrate">Vibrer</string>
+	<string name="hint_vibrate">Vil få telefonen til at vibrere</string>
+	<string name="ringtone">Ringetone</string>
+	<string name="hint_ringtone">Spil en ringetone</string>
+	<string name="select_ringtone">Vælg ringetone</string>
+	<string name="hint_select_ringtone">Ændre, hvilke ringetone der bruges</string>
+	<string name="flash_led">Blinkende LED</string>
+	<string name="hint_flash_led">Får telefonens LED til at blinke</string>
+	<string name="hint_domain">Vælg det Boskoi eksempel, du ønsker at interagere med.</string>
+	<string name="chk_auto_fetch">Automatisk synkronisering</string>
+	<string name="chk_sms_send">Send SMS til Boskoi</string>
+	<string name="txt_auto_update_delay">Automatisk synkroniseringsfrekvens</string>
+	<string name="txt_path_SD">Sti på SD:</string>
+	<string name="txt_cache">Cache-filer:</string>
+	<string name="txt_countries">Vælg et standard land</string>
+	<string name="txt_domain">Vælg din hjemmeside</string>
+	<string name="txt_first_name">Fornavn</string>
+	<string name="hint_first_name">Til modtagelse når der indsendes en rapport (valgfrit).</string>
+	<string name="txt_last_name">Efternavn</string>
+	<string name="hint_last_name">Også til modtagelse ved indsendelse af en rapport (valgfrit).</string>
+	<string name="txt_user_name">Brugernavn</string>
+	<string name="hint_user_name">Dit Boskoi brugernavn</string>
+	<string name="txt_password">Adgangskode</string>
+	<string name="hint_password">Din Boskoi adgangskode</string>
+	<string name="txt_email">E-mail-adresse</string>
+	<string name="hint_email">For kontakt kun</string>
+	<string name="total_reports">Antallet af rapporter</string>
+	<string name="hint_camera">Tryk på skærmen for at tage billedet</string>
+	<string name="hint_total_reports">Det samlede antal indberetninger der hentes fra den valgte instans.</string>
+	
+	<!--  About screen -->
+	<string name="version_name_lbl">Version </string>
+	<string name="menu_about">Om</string>
+	<string name="boskoi_url">mere om FoAM</string>
+	<string name="welcome_mgs">En mobiltelefon guide til spiselige vilde fødevarekilder ved byerne, der kombinerer de gamle færdigheder af finsnittere med de nuværende open source medier.
+	\n\nDette pilotprojekt er initieret af FoAM (http://www.fo.am),\støttet af het Prins Bernhard cultuurfonds (http://www.prinsbernhardcultuurfonds.nl)\og udviklet af \nJoey van der Bie (http://www.vanderBie.net), \nMaarten van der Mark (http://www.vdmark.info) og \nVincent Vijn (http://www.vijn.me)
+	</string>
+	
+	<!--  Blog screen -->
+	<string name="menu_blog">Nyheder</string>
+	<string name="blog_error">Kunne modtage nyheder.</string>
+	
+	<!-- Eula -->
+	<string name="hello_eula">Boskoi er en guide til byernes spiselige vilde fødevarekilder.
+Før start skal du læse følgende oplysninger.</string>
+	<string name="eula_1">1. Vær venlig</string>
+	<string name="eula_1_sub">Bed om tilladelse, når ejerskabet er uklart</string>
+	<string name="eula_2">2. Vær gavmild</string>
+	<string name="eula_2_sub">Pluk kun det du vil spise. Efterlad nok til andre (eller dyreliv)</string>
+	<string name="eula_3">3. Være opmærksom</string>
+	<string name="eula_3_sub">Vær opmærksom på toksicitet og træd ikke på andre planter, når du plukker</string>
+	<string name="eula_4">4. Vær forsigtig</string>
+	<string name="eula_4_sub">Du må ikke lægge nogen sjældne eller beskyttede arter på kortet</string>
+	<string name="license_title">Boskoi er Open Source</string>
+	<string name="license">Boskoi er licenseret under LGPL v3 licens. Flere oplysninger om<a href="http://www.boskoi.org/open">http://www.boskoi.org/open</a></string>
+	<string name="privacy_title">Privat</string>
+	<string name="privacy_info">Vi bruger Google Analytics til at forbedre vores ansøgning. Du kan læse, hvad dette indebærer på<a href="http://www.google.com/intl/en_uk/analytics/tos.html">http://goo.gl/2EXSr</a>. En version uden Analytics kan leveres på forespørgsel</string>
+	<string name="thankyou">Tak fordi du tog dig tid til at læse vores regler, hvis du accepterer vores betingelser, er du velkommen til at nyde frugterne af verden!</string>
+	
+	
+	
+   <string name="eulaBtn">Vis regler</string>
+   <string name="eula_title">Boskoi Brugsvilkår</string>
+   <string name="eula_accept">Accepter</string>
+   <string name="eula_refuse">Nægt</string>
+   <string name="eula">For at bruge programmet opfordrer vi dig til at følge disse regler:\n
+		\n
+		1. Vær venlig.\n 
+		Bed om tilladelse, når ejerskabet er uklart.\n
+		\n
+		2. Vær gavmild\n
+		Vælge kun hvad du vil spise. Efterlad nok til andre (eller dyreliv).\n
+		\n
+		3. Være opmærksomme\n
+		Vær opmærksom på toksicitet og træd ikke på andre planter, når du plukker.\n
+		\n
+		4. Vær forsigtig\n
+		Du må ikke lægge nogen sjældne eller beskyttede arter på kortet.\n
+		\n
+		Tak fordi du tog dig tid til at læse vores regler. Hvis du accepterer vores betingelser, er du velkommen til at nyde frugterne af verden!
+	</string>
+	<string name="lgplBtn">Vis licensoplysninger</string>
+	<string name="lgpl">Licensing\n\n
+		Boskoi er en Open Source platform baseret på Ushahidi (<a href="http://www.ushahidi.com">http://www.ushahidi.com</a>)\n\n
+		Boskoi er licenseret under LGPL v3 licens(<a href="http://www.gnu.org/licenses/lgpl.html">http://www.gnu.org/licenses/lgpl.html</a>)\n\n
+		Mere information på <a href="http://www.boskoi.org/open">http://www.boskoi.org/open</a>
+	</string>
+	<string name="privacyBtn">Vis private oplysninger</string>
+	<string name="privacy">Privacy\n\n
+For at forbedre vores ansøgning logger vi brugeradfærd ved hjælp af Google Analytics.\n\n
+Denne logning er gemt på Google Analytics-serveren og bruges privat. Vi deler ikke disse oplysninger med andre parter! Google Analytics skik licens kan findes på: \n <a href="http://www.google.com/intl/en_uk/analytics/tos.html">http://www.google.com/intl/en_uk/analytics/tos.html</a>\n\n
+Du bør bemærke, at analytics i øjeblikket ikke kan slukkes. Hvis du ikke ønsker at vi logger din adfærd bedes du informere os, og vi vil forsyne dig med en version, der ikke logger din adfærd.</string>
+	
+	<string name="blogBtn">Vis seneste nyhedsindlæg</string>
+	<string name="loadingBlog">Henter nyheder</string>
+	<string name="blog">Tryk på et emne for at se indholdet:</string>
+	<string name="blogShareText">Boskoi, Urban Edibles nyhedsindlæg:</string>
+	<string name="blogShareTextInteresting">Interessant</string>
+	<string name="shareBtn">Del indlæg</string>
+</resources>

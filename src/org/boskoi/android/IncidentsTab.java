@@ -30,17 +30,20 @@ import android.widget.TabHost;
 import android.widget.TabHost.OnTabChangeListener;
 
 
-public class IncidentsTab extends TabActivity {
+public class IncidentsTab extends BoskoiTabActivity {
 	
 	private TabHost tabHost;
 	private Bundle bundle;
 	private Bundle extras;
 	private Bundle tabContext;
 	public static IncidentsTab context;
-    
+ 
+	 
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
+        
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         setContentView(R.layout.tabhost);
         context = this;
@@ -112,4 +115,5 @@ public class IncidentsTab extends TabActivity {
 	    }
 	    tabhost.getTabWidget().getChildAt(tabhost.getCurrentTab()).setBackgroundColor(Color.parseColor("#DDDEDC")); // selected
 	}
+	
 }

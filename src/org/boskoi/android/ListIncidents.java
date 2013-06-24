@@ -39,6 +39,8 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -47,8 +49,10 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -418,30 +422,35 @@ public class ListIncidents extends Activity
 	}
 	
 	private void setCategoryLanuage(Locale language){
-	//		if(BoskoiService.language.getCountry().equals(Locale.US.getCountry()) && BoskoiService.language.getLanguage().equals(Locale.US.getLanguage())){
-	//		//locale langue is english
-	//		//switch to dutch
-	//		BoskoiService.language = new Locale("nl", "NL");
-	//	}else{
-	//		//switch back to english
-	//		BoskoiService.language = new Locale("en", "US");
-	//	}
-	//	
-	//
 		BoskoiService.language = language;
 		
 		BoskoiService.saveSettings(this.getBaseContext());
 	    Toast.makeText(this,getString( R.string.incident_switch_language), Toast.LENGTH_LONG).show();
 	
+
+	    SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
+
+        Configuration config = getBaseContext().getResources().getConfiguration();
+
+        String lang = settings.getString("Language", "");
+        String langCountry = settings.getString("LanguageCountry", "");
+        if (! "".equals(lang) && (! config.locale.getLanguage().equals(lang) || !config.locale.getCountry().equals(langCountry)))
+        {
+            language = new Locale(lang, langCountry);
+            Locale.setDefault(language);
+            config.locale = language;
+            getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+        }
+	    
 	    //force refresh
-	    Intent refreshIntent = new Intent(ListIncidents.this, IncidentsTab.class);
+	   Intent refreshIntent = new Intent(ListIncidents.this, IncidentsTab.class);
 		Bundle tab = new Bundle();
 		tab.putInt("tab_index", 1);
 		refreshIntent.putExtra("tab", tab);
 	
 		ListIncidents.this.startActivityForResult(refreshIntent, 5);
 		finish();
-	}
+	    }
 	
 	private class ReportsTask extends AsyncTask<Void, Void, Integer> {
 
@@ -710,6 +719,4 @@ public class ListIncidents extends Activity
 		}
 		
     }
-    
-    
 }
