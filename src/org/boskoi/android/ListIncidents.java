@@ -20,7 +20,7 @@
  **/
 
 package org.boskoi.android;
- 
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -69,407 +69,447 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
- 
-public class ListIncidents extends Activity
-{
-  
+
+public class ListIncidents extends Activity {
+
 	/** Called when the activity is first created. */
 	private ListView listIncidents = null;
-	private ListIncidentAdapter ila = new ListIncidentAdapter( this );
+	private ListIncidentAdapter ila = new ListIncidentAdapter(this);
 
-	private static final int INCIDENT_REFRESH= Menu.FIRST+4;
-	private static final int INCIDENT_LANG= Menu.FIRST+5;
+	private static final int INCIDENT_REFRESH = Menu.FIRST + 4;
+	private static final int INCIDENT_LANG = Menu.FIRST + 5;
 	private static final int REQUEST_CODE_CATEGORY = 6;
 
 	private Bundle incidentsBundle = new Bundle();
 	private final Handler mHandler = new Handler();
 	public static BoskoiDatabase mDb;
 	public static String selectedCategory = "";
-	
+
 	private Button viewMap;
 	private Button back;
-    private TextView title;
-    private TextView body;
-    private TextView date;
-    private TextView location;
-    private TextView category;
-    private TextView status;
-    private TextView wikilink;
+	private TextView title;
+	private TextView body;
+	private TextView date;
+	private TextView location;
+	private TextView category;
+	private TextView status;
+	private TextView wikilink;
 	private Button btnFilterCategory;
 
-    private String media;
-    private String thumbnails [];
-    private int id;
-    private String reportLatitude;
-    private String reportLongitude; 
-    private String reportTitle;
-    private String reportDescription;
-  
+	private String media;
+	private String thumbnails[];
+	private int id;
+	private String reportLatitude;
+	private String reportLongitude;
+	private String reportTitle;
+	private String reportDescription;
+
 	private List<IncidentsData> mOldIncidents;
 
-  
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		BoskoiService.trackPageView(ListIncidents.this,"/ListIncidents");
+		BoskoiService.trackPageView(ListIncidents.this, "/ListIncidents");
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
-		setContentView( R.layout.list_incidents );
+		setContentView(R.layout.list_incidents);
 		BoskoiService.loadSettings(ListIncidents.this);
-		
-	
+
 		btnFilterCategory = (Button) findViewById(R.id.filter_category);
-		
+
 		btnFilterCategory.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				
-				//Clear any old data in the list (this is because it is not done here when selecting the all category again).
+
+				// Clear any old data in the list (this is because it is not
+				// done here when selecting the all category again).
 				ila.removeItems();
 				mOldIncidents.clear();
 				ila.notifyDataSetChanged();
-				
-				Intent intent = new Intent().setClass(ListIncidents.this, SimpleCategoryList.class);
+
+				Intent intent = new Intent().setClass(ListIncidents.this,
+						SimpleCategoryList.class);
 				// Make it a subactivity so we know when it returns
 				startActivityForResult(intent, REQUEST_CODE_CATEGORY);
 			}
 		});
-		
-       
-		listIncidents = (ListView) findViewById( R.id.view_incidents );
-        
+
+		listIncidents = (ListView) findViewById(R.id.view_incidents);
+
 		mOldIncidents = new ArrayList<IncidentsData>();
 		listIncidents.setOnScrollListener(new EndlessScrollListener(this));
-		listIncidents.setAdapter( ila );
+		listIncidents.setAdapter(ila);
 
-		listIncidents.setOnItemClickListener( new OnItemClickListener(){  
-      
-			public void onItemClick(AdapterView<?> arg0, View view, int position,
-        		  long id) {
-				
-				incidentsBundle.putInt("id", mOldIncidents.get(position).getIncidentId());
-				incidentsBundle.putString("title",mOldIncidents.get(position).getIncidentTitle());
-				incidentsBundle.putString("desc", mOldIncidents.get(position).getIncidentDesc());
-				incidentsBundle.putString("longitude",mOldIncidents.get(position).getIncidentLocLongitude());
-				incidentsBundle.putString("latitude",mOldIncidents.get(position).getIncidentLocLatitude());
-				incidentsBundle.putString("category", mOldIncidents.get(position).getIncidentCategories());
-				incidentsBundle.putString("location", mOldIncidents.get(position).getIncidentLocation());
-				incidentsBundle.putString("date", mOldIncidents.get(position).getIncidentDate());
-				incidentsBundle.putString("media", mOldIncidents.get(position).getIncidentMedia());
-				incidentsBundle.putString("status", ""+mOldIncidents.get(position).getIncidentVerified());
-          
+		listIncidents.setOnItemClickListener(new OnItemClickListener() {
+
+			public void onItemClick(AdapterView<?> arg0, View view,
+					int position, long id) {
+
+				incidentsBundle.putInt("id", mOldIncidents.get(position)
+						.getIncidentId());
+				incidentsBundle.putString("title", mOldIncidents.get(position)
+						.getIncidentTitle());
+				incidentsBundle.putString("desc", mOldIncidents.get(position)
+						.getIncidentDesc());
+				incidentsBundle.putString("longitude",
+						mOldIncidents.get(position).getIncidentLocLongitude());
+				incidentsBundle.putString("latitude",
+						mOldIncidents.get(position).getIncidentLocLatitude());
+				incidentsBundle.putString("category",
+						mOldIncidents.get(position).getIncidentCategories());
+				incidentsBundle.putString("location",
+						mOldIncidents.get(position).getIncidentLocation());
+				incidentsBundle.putString("date", mOldIncidents.get(position)
+						.getIncidentDate());
+				incidentsBundle.putString("media", mOldIncidents.get(position)
+						.getIncidentMedia());
+				incidentsBundle.putString("status",
+						"" + mOldIncidents.get(position).getIncidentVerified());
+
 				showDialogScreen(mOldIncidents.get(position));
 
 			}
-          
-		});
-		
-		
-		
-		mHandler.post(mDisplayIncidents);
-		
-	}
-	
 
-  
-	public void showDialogScreen(IncidentsData inci){
-		BoskoiService.trackPageView(ListIncidents.this,"/IncidentDetails");
+		});
+
+		mHandler.post(mDisplayIncidents);
+
+	}
+
+	public void showDialogScreen(IncidentsData inci) {
+		BoskoiService.trackPageView(ListIncidents.this, "/IncidentDetails");
 		final Dialog dialog = new Dialog(this);
 
 		dialog.setContentView(R.layout.view_incidents);
 		dialog.setTitle("Report Details");
 
 		viewMap = (Button) dialog.findViewById(R.id.view_map);
-        
-        id = inci.getIncidentId();
-        reportTitle = inci.getIncidentTitle();
-        reportDescription = inci.getIncidentDesc();
-        reportLatitude = inci.getIncidentLocLatitude();
-        reportLongitude = inci.getIncidentLocLongitude();
-        String iStatus = inci.getIncidentVerified()  == 0 ? "Unverified" : "Verified";
-        title = (TextView) dialog.findViewById(R.id.title);
-        title.setTypeface(Typeface.DEFAULT_BOLD);
-        title.setTextColor(Color.parseColor(getText(R.string.title_string).toString()));//Color.rgb(144, 80, 62));
 
-        //get full category names from db based on the id's found in the incident
-        CategoriesData[] categories = BoskoiService.getCategoriesDetails(inci.getIncidentCategories(), BoskoiService.language);
-        String categ = "";
-        for (CategoriesData cate : categories){
-        	categ = categ + cate.getCategoryTitle() + " (" + cate.getCategoryTitleLA()+"), ";      		
-        }
-        title.setText(categ);
-        
-        
-        //display wikipedia link. If latin is not available we put english string in
-        String wiki = "";
-        for (CategoriesData cate : categories){
-        	if(!cate.getCategoryTitle().equals("Not available")){
-	        	if(!cate.getCategoryTitleLA().equals("")){
-	        		wiki = wiki + "<a href=http://"+BoskoiService.language.getLanguage()+".wikipedia.org/w/index.php?title=Special%3ASearch&search="+cate.getCategoryTitle().replace(" ", "%20")+">" + cate.getCategoryTitle() +" on Wikipedia</a><br>" ;   
-	        	}
-        	}
-        }
-    
-        wikilink = (TextView) dialog.findViewById(R.id.wikilink);
-        wikilink.setText(Html.fromHtml(wiki));
-        wikilink.setMovementMethod(LinkMovementMethod.getInstance());
-        
-        date = (TextView) dialog.findViewById(R.id.date);
-        date.setTextColor(Color.BLACK);
-        date.setText( Util.joinString("Date: ",inci.getIncidentDate()));
-        
-        
-        location = (TextView) dialog.findViewById(R.id.location);
-        location.setTextColor(Color.BLACK);
-        location.setText(Util.joinString("Location: ", inci.getIncidentLocation()));
-       
-        body = (TextView) dialog.findViewById(R.id.webview);
-        body.setTextColor(Color.BLACK);
-        body.setText(inci.getIncidentDesc());
-        
-        status = (TextView) dialog.findViewById( R.id.status);
-        
-		//change colored to red if text is not Verified
-		if(iStatus.equals("Verified")) {
-			status.setTextColor(Color.parseColor(getText(R.string.verified_string).toString()));//Color.rgb(41, 142, 40));
-		} else {
-			status.setTextColor(Color.parseColor(getText(R.string.notverified_string).toString()));//Color.rgb(237, 0, 0));
-		}
-        status.setText(iStatus);
-    	
-    	media = inci.getIncidentMedia();
-    	
-    	ImageAdapter imageAdapter = new ImageAdapter(this);
-    	
-    	if( !media.equals("")) {
-    		
-    		thumbnails = media.split(",");    	
-    
-        	for( int i = 0; i < thumbnails.length; i++ ) {
-        		imageAdapter.mImageIds.add( ImageManager.getImages( thumbnails[i] ) );
-        		
-        	}
-    	}
-        
-        Gallery g = (Gallery) dialog.findViewById(R.id.gallery);
-        
-        g.setAdapter( imageAdapter );
-        
-        g.setOnItemClickListener(new OnItemClickListener() {
-            public void onItemClick(AdapterView parent, View v, int position, long id) {
-            	Intent intent = new Intent(ListIncidents.this,LargeImageView.class);
-				intent.putExtra("ImageName", thumbnails);
-	
-				startActivityForResult(intent,1);
-				setResult(RESULT_OK );
-            }
-        });
-        
-		incidentsBundle.putInt("id", id);
+		id = inci.getIncidentId();
 		reportTitle = inci.getIncidentTitle();
-        reportDescription = inci.getIncidentDesc();
-        reportLatitude = inci.getIncidentLocLatitude();
-        reportLongitude = inci.getIncidentLocLongitude();
-        
-		incidentsBundle.putString("title",reportTitle);
-		incidentsBundle.putString("desc", reportDescription);
-		incidentsBundle.putString("longitude",reportLongitude);
-		incidentsBundle.putString("latitude",reportLatitude);
-        
-        viewMap.setOnClickListener( new View.OnClickListener() {  
-            
-        	public void onClick( View v ) {
-        		BoskoiService.trackPageView(ListIncidents.this,"/ListIncidents/IncidentDetails/ShowOnMap");
-				Bundle tab = new Bundle();
-				tab.putInt("tab_index", 0);
-				
-				Intent intent = new Intent( ListIncidents.this,IncidentsTab.class);
-				intent.putExtra("report", incidentsBundle);
-				intent.putExtra("tab", tab);
-				startActivityForResult(intent,1);
-				setResult( RESULT_OK, intent );
-				
-				dialog.dismiss();
-              
+		reportDescription = inci.getIncidentDesc();
+		reportLatitude = inci.getIncidentLocLatitude();
+		reportLongitude = inci.getIncidentLocLongitude();
+		String iStatus = inci.getIncidentVerified() == 0 ? "Unverified"
+				: "Verified";
+		title = (TextView) dialog.findViewById(R.id.title);
+		title.setTypeface(Typeface.DEFAULT_BOLD);
+		title.setTextColor(Color.parseColor(getText(R.string.title_string)
+				.toString()));// Color.rgb(144, 80, 62));
+
+		// get full category names from db based on the id's found in the
+		// incident
+		CategoriesData[] categories = BoskoiService.getCategoriesDetails(
+				inci.getIncidentCategories(), BoskoiService.language);
+		String categ = "";
+		for (CategoriesData cate : categories) {
+			categ = categ + cate.getCategoryTitle() + " ("
+					+ cate.getCategoryTitleLA() + "), ";
+		}
+		title.setText(categ);
+
+		// display wikipedia link. If latin is not available we put english
+		// string in
+		String wiki = "";
+		for (CategoriesData cate : categories) {
+			if (!cate.getCategoryTitle().equals("Not available")) {
+				if (!cate.getCategoryTitleLA().equals("")) {
+					wiki = wiki
+							+ "<a href=http://"
+							+ BoskoiService.language.getLanguage()
+							+ ".wikipedia.org/w/index.php?title=Special%3ASearch&search="
+							+ cate.getCategoryTitle().replace(" ", "%20") + ">"
+							+ cate.getCategoryTitle() + " on Wikipedia</a><br>";
+				}
+			}
+		}
+
+		wikilink = (TextView) dialog.findViewById(R.id.wikilink);
+		wikilink.setText(Html.fromHtml(wiki));
+		wikilink.setMovementMethod(LinkMovementMethod.getInstance());
+
+		date = (TextView) dialog.findViewById(R.id.date);
+		date.setTextColor(Color.BLACK);
+		date.setText(Util.joinString("Date: ", inci.getIncidentDate()));
+
+		location = (TextView) dialog.findViewById(R.id.location);
+		location.setTextColor(Color.BLACK);
+		location.setText(Util.joinString("Location: ",
+				inci.getIncidentLocation()));
+
+		body = (TextView) dialog.findViewById(R.id.webview);
+		body.setTextColor(Color.BLACK);
+		body.setText(inci.getIncidentDesc());
+
+		status = (TextView) dialog.findViewById(R.id.status);
+
+		// change colored to red if text is not Verified
+		if (iStatus.equals("Verified")) {
+			status.setTextColor(Color.parseColor(getText(
+					R.string.verified_string).toString()));// Color.rgb(41, 142,
+															// 40));
+		} else {
+			status.setTextColor(Color.parseColor(getText(
+					R.string.notverified_string).toString()));// Color.rgb(237,
+																// 0, 0));
+		}
+		status.setText(iStatus);
+
+		media = inci.getIncidentMedia();
+
+		ImageAdapter imageAdapter = new ImageAdapter(this);
+
+		if (!media.equals("")) {
+
+			thumbnails = media.split(",");
+
+			for (int i = 0; i < thumbnails.length; i++) {
+				imageAdapter.mImageIds.add(ImageManager
+						.getImages(thumbnails[i]));
+
+			}
+		}
+
+		Gallery g = (Gallery) dialog.findViewById(R.id.gallery);
+
+		g.setAdapter(imageAdapter);
+
+		g.setOnItemClickListener(new OnItemClickListener() {
+			public void onItemClick(AdapterView parent, View v, int position,
+					long id) {
+				Intent intent = new Intent(ListIncidents.this,
+						LargeImageView.class);
+				intent.putExtra("ImageName", thumbnails);
+
+				startActivityForResult(intent, 1);
+				setResult(RESULT_OK);
 			}
 		});
-        
-        back = (Button) dialog.findViewById(R.id.btn_back);
-        back.setOnClickListener( new View.OnClickListener() {  
-            
-        	public void onClick( View v ) {
-        		dialog.dismiss();
-        	}
-        });
 
-        Button dialogNavigate = (Button) dialog.findViewById(R.id.btn_navigate);
-        dialogNavigate.setOnClickListener(new OnClickListener() { 
-			public void onClick(View view) {		
-				BoskoiService.trackPageView(ListIncidents.this,"/ListIncidents/IncidentDetails/Navigate");
-		Intent intent = new Intent(android.content.Intent.ACTION_VIEW, 
-				Uri.parse("http://maps.google.com/maps?daddr="+reportLatitude+","+reportLongitude));
+		incidentsBundle.putInt("id", id);
+		reportTitle = inci.getIncidentTitle();
+		reportDescription = inci.getIncidentDesc();
+		reportLatitude = inci.getIncidentLocLatitude();
+		reportLongitude = inci.getIncidentLocLongitude();
+
+		incidentsBundle.putString("title", reportTitle);
+		incidentsBundle.putString("desc", reportDescription);
+		incidentsBundle.putString("longitude", reportLongitude);
+		incidentsBundle.putString("latitude", reportLatitude);
+
+		viewMap.setOnClickListener(new View.OnClickListener() {
+
+			public void onClick(View v) {
+				BoskoiService.trackPageView(ListIncidents.this,
+						"/ListIncidents/IncidentDetails/ShowOnMap");
+				Bundle tab = new Bundle();
+				tab.putInt("tab_index", 0);
+
+				Intent intent = new Intent(ListIncidents.this,
+						IncidentsTab.class);
+				intent.putExtra("report", incidentsBundle);
+				intent.putExtra("tab", tab);
+				startActivityForResult(intent, 1);
+				setResult(RESULT_OK, intent);
+
+				dialog.dismiss();
+
+			}
+		});
+
+		back = (Button) dialog.findViewById(R.id.btn_back);
+		back.setOnClickListener(new View.OnClickListener() {
+
+			public void onClick(View v) {
+				dialog.dismiss();
+			}
+		});
+
+		Button dialogNavigate = (Button) dialog.findViewById(R.id.btn_navigate);
+		dialogNavigate.setOnClickListener(new OnClickListener() {
+			public void onClick(View view) {
+				BoskoiService.trackPageView(ListIncidents.this,
+						"/ListIncidents/IncidentDetails/Navigate");
+				Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+						Uri.parse("http://maps.google.com/maps?daddr="
+								+ reportLatitude + "," + reportLongitude));
 				startActivity(intent);
 			}
-		} );
-        
+		});
+
 		dialog.show();
 
 	}
-	
+
 	@Override
-	protected void onResume(){
+	protected void onResume() {
 		super.onResume();
-		BoskoiService.trackPageView(ListIncidents.this,"/ListIncidents");
-		if(!selectedCategory.equals("")){
+		BoskoiService.trackPageView(ListIncidents.this, "/ListIncidents");
+		if (!selectedCategory.equals("")) {
 			showIncidents(selectedCategory, 0);
-		}if(selectedCategory.equals("All")){
+		}
+		if (selectedCategory.equals("All")) {
 			showIncidents("All", 0);
-			//WORKAROUND CODE:
-			//In case users explicitly selects the All category in the filter the scroll listener is giving problems.
+			// WORKAROUND CODE:
+			// In case users explicitly selects the All category in the filter
+			// the scroll listener is giving problems.
 			// Here we reinitialize is, which solves the problem.
 			listIncidents.setOnScrollListener(new EndlessScrollListener(this));
 		}
 	}
-  
+
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
 	}
-  
+
 	final Runnable mDisplayIncidents = new Runnable() {
 		public void run() {
 			setProgressBarIndeterminateVisibility(true);
 			showIncidents("All", 0);
-			try{
+			try {
 				setProgressBarIndeterminateVisibility(false);
-			} catch(Exception e){
-				return;  //means that the dialog is not showing, ignore please!
+			} catch (Exception e) {
+				return; // means that the dialog is not showing, ignore please!
 			}
 		}
 	};
-  
 
-
-	//menu stuff
+	// menu stuff
 	@Override
-	public void onCreateContextMenu(ContextMenu menu, View v,ContextMenu.ContextMenuInfo menuInfo) {
+	public void onCreateContextMenu(ContextMenu menu, View v,
+			ContextMenu.ContextMenuInfo menuInfo) {
 		populateMenu(menu);
 	}
-  
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		populateMenu(menu);
- 
-		return(super.onCreateOptionsMenu(menu));
+
+		return (super.onCreateOptionsMenu(menu));
 	}
- 
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		//applyMenuChoice(item);
- 
-		return(applyMenuChoice(item) ||
-				super.onOptionsItemSelected(item));
+		// applyMenuChoice(item);
+
+		return (applyMenuChoice(item) || super.onOptionsItemSelected(item));
 	}
- 
+
 	public boolean onContextItemSelected(MenuItem item) {
- 
-		return(applyMenuChoice(item) ||
-        super.onContextItemSelected(item));
+
+		return (applyMenuChoice(item) || super.onContextItemSelected(item));
 	}
-  
+
 	private void populateMenu(Menu menu) {
 		MenuItem i;
 
-		i = menu.add( Menu.NONE, INCIDENT_REFRESH, Menu.NONE, R.string.incident_menu_refresh );
+		i = menu.add(Menu.NONE, INCIDENT_REFRESH, Menu.NONE,
+				R.string.incident_menu_refresh);
 		i.setIcon(R.drawable.boskoi_refresh);
-		i = menu.add( Menu.NONE, INCIDENT_LANG, Menu.NONE, R.string.incident_menu_lang );
+		i = menu.add(Menu.NONE, INCIDENT_LANG, Menu.NONE,
+				R.string.incident_menu_lang);
 		i.setIcon(R.drawable.boskoi_menu_language);
-	  
+
 	}
-  
+
 	private boolean applyMenuChoice(MenuItem item) {
 		Intent intent;
 		switch (item.getItemId()) {
 
-    		case INCIDENT_REFRESH:
-    			ReportsTask reportsTask = new ReportsTask();
-	            reportsTask.appContext = this;
-	            reportsTask.execute();
-    			return(true);
-    		case INCIDENT_LANG:
+		case INCIDENT_REFRESH:
+			ReportsTask reportsTask = new ReportsTask();
+			reportsTask.appContext = this;
+			reportsTask.execute();
+			return (true);
+		case INCIDENT_LANG:
 
-    			AlertDialog.Builder builder = new AlertDialog.Builder(this);
-    			builder.setTitle(getString(R.string.incident_switch_language));
-    			builder.setItems(R.array.languages_arr, new DialogInterface.OnClickListener() {
-    			    public void onClick(DialogInterface dialog, int item) {
-    			    	 switch(item){
-                    	 case 0:
-                    		 ListIncidents.this.setCategoryLanuage(Locale.US);
-                    		 break;
-                    	 case 1:
-                    		 ListIncidents.this.setCategoryLanuage(new Locale("nl", "NL"));
-                    		 break;
-                    	 case 2:
-                    		 ListIncidents.this.setCategoryLanuage(new Locale("da", "DK"));
-                    		 break;
-                    	 }
-    			    }
-    			});
-    			AlertDialog alert = builder.create();
-    			alert.show();
-    			
-    			return(true);	
-        
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			builder.setTitle(getString(R.string.incident_switch_language));
+			builder.setItems(R.array.languages_arr,
+					new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int item) {
+							switch (item) {
+							case 0:
+								ListIncidents.this
+										.setCategoryLanuage(Locale.US);
+								break;
+							case 1:
+								ListIncidents.this
+										.setCategoryLanuage(new Locale("nl",
+												"NL"));
+								break;
+							case 2:
+								ListIncidents.this
+										.setCategoryLanuage(new Locale("da",
+												"DK"));
+								break;
+							case 3:
+								ListIncidents.this
+										.setCategoryLanuage(new Locale("fr",
+												"FR"));
+								break;
+							}
+						}
+					});
+			AlertDialog alert = builder.create();
+			alert.show();
+
+			return (true);
+
 		}
-		return(false);
+		return (false);
 	}
-	
-	private void setCategoryLanuage(Locale language){
+
+	private void setCategoryLanuage(Locale language) {
 		BoskoiService.language = language;
-		
+
 		BoskoiService.saveSettings(this.getBaseContext());
-	    Toast.makeText(this,getString( R.string.incident_switch_language), Toast.LENGTH_LONG).show();
-	
+		Toast.makeText(this, getString(R.string.incident_switch_language),
+				Toast.LENGTH_LONG).show();
 
-	    SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
+		SharedPreferences settings = PreferenceManager
+				.getDefaultSharedPreferences(this);
 
-        Configuration config = getBaseContext().getResources().getConfiguration();
+		Configuration config = getBaseContext().getResources()
+				.getConfiguration();
 
-        String lang = settings.getString("Language", "");
-        String langCountry = settings.getString("LanguageCountry", "");
-        if (! "".equals(lang) && (! config.locale.getLanguage().equals(lang) || !config.locale.getCountry().equals(langCountry)))
-        {
-            language = new Locale(lang, langCountry);
-            Locale.setDefault(language);
-            config.locale = language;
-            getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
-        }
-	    
-	    //force refresh
-	   Intent refreshIntent = new Intent(ListIncidents.this, IncidentsTab.class);
+		String lang = settings.getString("Language", "");
+		String langCountry = settings.getString("LanguageCountry", "");
+		if (!"".equals(lang)
+				&& (!config.locale.getLanguage().equals(lang) || !config.locale
+						.getCountry().equals(langCountry))) {
+			language = new Locale(lang, langCountry);
+			Locale.setDefault(language);
+			config.locale = language;
+			getBaseContext().getResources().updateConfiguration(config,
+					getBaseContext().getResources().getDisplayMetrics());
+		}
+
+		// force refresh
+		Intent refreshIntent = new Intent(ListIncidents.this,
+				IncidentsTab.class);
 		Bundle tab = new Bundle();
 		tab.putInt("tab_index", 1);
 		refreshIntent.putExtra("tab", tab);
-	
+
 		ListIncidents.this.startActivityForResult(refreshIntent, 5);
 		finish();
-	    }
-	
+	}
+
 	private class ReportsTask extends AsyncTask<Void, Void, Integer> {
 
 		protected Integer status;
 		protected Context appContext;
 		protected boolean clear = false;
-		
+
 		private static final int BOSKOI_ID = 1;
 		private NotificationManager mNotificationManager;
 		private int icon = R.drawable.notification_icon;
 		private String ns = Context.NOTIFICATION_SERVICE;
-		
-		
+
 		@Override
 		protected void onPreExecute() {
-			Util.showToast(ListIncidents.this,
-					R.string.retrieving_reports);
+			Util.showToast(ListIncidents.this, R.string.retrieving_reports);
 			setProgressBarIndeterminateVisibility(true);
-			
+
 			mNotificationManager = (NotificationManager) getSystemService(ns);
 			CharSequence tickerText = getText(R.string.retrieving_reports);
 			long when = System.currentTimeMillis();
@@ -478,10 +518,13 @@ public class ListIncidents extends Activity
 			Context context = getApplicationContext();
 			CharSequence contentTitle = getText(R.string.notification_title);
 			CharSequence contentText = getText(R.string.retrieving_reports);
-			Intent notificationIntent = new Intent(ListIncidents.this, IncidentsTab.class);
-			PendingIntent contentIntent = PendingIntent.getActivity(ListIncidents.this, 0, notificationIntent, 0);
+			Intent notificationIntent = new Intent(ListIncidents.this,
+					IncidentsTab.class);
+			PendingIntent contentIntent = PendingIntent.getActivity(
+					ListIncidents.this, 0, notificationIntent, 0);
 
-			notification.setLatestEventInfo(context, contentTitle, contentText, contentIntent);
+			notification.setLatestEventInfo(context, contentTitle, contentText,
+					contentIntent);
 			mNotificationManager.notify(BOSKOI_ID, notification);
 
 		}
@@ -498,203 +541,227 @@ public class ListIncidents extends Activity
 
 				Util.showToast(appContext, R.string.internet_connection);
 			} else if (result == 0) {
-				Toast.makeText(ListIncidents.this,
-						"Found " + Integer.toString(BoskoiService.numberOfNewReports) + " new reports", Toast.LENGTH_LONG)
-						.show();
+				Toast.makeText(
+						ListIncidents.this,
+						"Found "
+								+ Integer
+										.toString(BoskoiService.numberOfNewReports)
+								+ " new reports", Toast.LENGTH_LONG).show();
 				setProgressBarIndeterminateVisibility(false);
-				
+
 				mNotificationManager = (NotificationManager) getSystemService(ns);
-				String contentText = "Found " + Integer.toString(BoskoiService.numberOfNewReports) + " new reports";
+				String contentText = "Found "
+						+ Integer.toString(BoskoiService.numberOfNewReports)
+						+ " new reports";
 				long when = System.currentTimeMillis();
-				Notification notification = new Notification(icon, contentText, when);
+				Notification notification = new Notification(icon, contentText,
+						when);
 				notification.flags |= notification.FLAG_AUTO_CANCEL;
 				Context context = getApplicationContext();
 				CharSequence contentTitle = getText(R.string.notification_title);
-				Intent notificationIntent = new Intent(ListIncidents.this, IncidentsTab.class);
-				PendingIntent contentIntent = PendingIntent.getActivity(ListIncidents.this, 0, notificationIntent, 0);
+				Intent notificationIntent = new Intent(ListIncidents.this,
+						IncidentsTab.class);
+				PendingIntent contentIntent = PendingIntent.getActivity(
+						ListIncidents.this, 0, notificationIntent, 0);
 
-				notification.setLatestEventInfo(context, contentTitle, contentText, contentIntent);
+				notification.setLatestEventInfo(context, contentTitle,
+						contentText, contentIntent);
 				mNotificationManager.notify(BOSKOI_ID, notification);
 			}
 		}
-	} 
-	
+	}
+
 	// get incidents from the db
-	public void showIncidents( String by, int page ) {
-		//this showIncidents method is called on run (just first 10 records are fetched), and again during scrolling using the endlessscrolllistener class, 
-		//when selecting a category as well but the endlessscrolllistener does not handle this at this point.
-		
-		BoskoiService.trackPageView(ListIncidents.this,"/ListIncidents/"+by);
+	public void showIncidents(String by, int page) {
+		// this showIncidents method is called on run (just first 10 records are
+		// fetched), and again during scrolling using the endlessscrolllistener
+		// class,
+		// when selecting a category as well but the endlessscrolllistener does
+		// not handle this at this point.
+
+		BoskoiService.trackPageView(ListIncidents.this, "/ListIncidents/" + by);
 		Cursor cursor = null;
-		if( by.equals("All")) {
-			//this is the "smart" call that requests only 10 records at the time
+		if (by.equals("All")) {
+			// this is the "smart" call that requests only 10 records at the
+			// time
 			cursor = BoskoiApplication.mDb.fetchIncidents(page);
-			
-		}else{
-			//Clear any old data in the list
+
+		} else {
+			// Clear any old data in the list
 			ila.removeItems();
 			mOldIncidents.clear();
 			ila.notifyDataSetChanged();
-			//in case a category is selected we just return all we can find
+			// in case a category is selected we just return all we can find
 			cursor = BoskoiApplication.mDb.fetchIncidentsByCategories(by);
-		
-
 
 		}
-		
-			String title;
-			String status;
-			String date;
-			String description;
-			String location;
-			String categories;
-			String media;
-	
-			String thumbnails [];
-			Drawable d = null;
-			if (cursor.moveToFirst()) {
-				int idIndex = cursor.getColumnIndexOrThrow( 
-						BoskoiDatabase.INCIDENT_ID);
-				int titleIndex = cursor.getColumnIndexOrThrow(
-						BoskoiDatabase.INCIDENT_TITLE);
-				int dateIndex = cursor.getColumnIndexOrThrow(
-						BoskoiDatabase.INCIDENT_DATE);
-				int verifiedIndex = cursor.getColumnIndexOrThrow(
-				  	BoskoiDatabase.INCIDENT_VERIFIED);
-				int locationIndex = cursor.getColumnIndexOrThrow(BoskoiDatabase.INCIDENT_LOC_NAME);
-		  
-				int descIndex = cursor.getColumnIndexOrThrow(BoskoiDatabase.INCIDENT_DESC);
-		  
-				int categoryIndex = cursor.getColumnIndexOrThrow(BoskoiDatabase.INCIDENT_CATEGORIES);
-		  
-				int mediaIndex = cursor.getColumnIndexOrThrow(BoskoiDatabase.INCIDENT_MEDIA);
-				
-				int latitudeIndex = cursor.getColumnIndexOrThrow(BoskoiDatabase.INCIDENT_LOC_LATITUDE);
-				
-				int longitudeIndex = cursor.getColumnIndexOrThrow(BoskoiDatabase.INCIDENT_LOC_LONGITUDE);
-				
-				
-				do {
-			  
-					IncidentsData incidentData = new IncidentsData();
-					mOldIncidents.add( incidentData );
-			  
-					int id = Util.toInt(cursor.getString(idIndex));
-					incidentData.setIncidentId(id);
-					incidentData.setIncidentLocLatitude(cursor.getString(latitudeIndex));
-					incidentData.setIncidentLocLongitude(cursor.getString(longitudeIndex));
-					title = Util.capitalizeString(cursor.getString(titleIndex));
-					incidentData.setIncidentTitle(title);
-			  
-					description = cursor.getString(descIndex);
-					incidentData.setIncidentDesc(description);
-			  
-					categories = cursor.getString(categoryIndex);
-					incidentData.setIncidentCategories(categories);
-			  
-					location = cursor.getString(locationIndex);
-					incidentData.setIncidentLocation(location);
-					
-					//TODO format the date to the appropriate format
-					date = Util.formatDate("yyyy-MM-dd hh:mm:ss", cursor.getString(dateIndex), "MMMM dd, yyyy 'at' hh:mm:ss aaa" );
-					
-					incidentData.setIncidentDate(date);			  
-			  
-					media = cursor.getString(mediaIndex);
-					incidentData.setIncidentMedia(media);
-					thumbnails = media.split(",");
-			  
-					//TODO make the string readable from the string resource
-					status = Util.toInt(cursor.getString(verifiedIndex) ) == 0 ? "Unverified" : "Verified";
-					incidentData.setIncidentVerified(Util.toInt(cursor.getString(verifiedIndex) ));
-			  
-					//TODO do a proper check for thumbnails
-					d = ImageManager.getImages( thumbnails[0]);
-					
-			        //get full category names from db based on the id's found in the incident (disregard original title)
-			        
-			        CategoriesData[] catdata = BoskoiService.getCategoriesDetails(incidentData.getIncidentCategories(), BoskoiService.language);
-			        String categ = "";
-			        int i =0;
-			        for (CategoriesData cate : catdata){
-			        	if(i > 0){
-			        		categ = categ+ ", ";
-			        	}
-			        	categ = categ + cate.getCategoryTitle();      		
-			        	i++;
-			        }
-			        title = categ;
-			        
-					ila.addItem( new ListIncidentText( d == null ? getResources().getDrawable( R.drawable.boskoi_report_icon):d, 
-							title, date, 
-							status,
-							description,
-							location,
-							media,
-							categories, 
-							id,
-							getResources().getDrawable( R.drawable.boskoi_arrow)) );
-			  
-				} while (cursor.moveToNext());
-			}
-			
-			//remove old list in case no results are found. Inform the user with some toast
-			if(cursor.getCount() == 0 && !by.equals("All")){
-				ila.removeItems();
-				Toast.makeText(this.getBaseContext(), R.string.report_not_found_for_category, Toast.LENGTH_SHORT).show();
-			}
-			
-			cursor.close();
 
-			ila.notifyDataSetChanged();
+		String title;
+		String status;
+		String date;
+		String description;
+		String location;
+		String categories;
+		String media;
 
-			//prevent the list from not loading on page 0
-			if(page == 0){
-				listIncidents.setSelection(0);
-			}
-			
-			//set the filtered by string (convert the by id to string)
-			
-			CategoriesData catDetails = new CategoriesData();
-			
-			if(!by.equals("All") ){
-				CategoriesData[] cats = BoskoiService.getCategoriesDetails(by, BoskoiService.language);
-				catDetails = cats[0];
-			}else{
-				catDetails.setCategoryTitle("All");
-			}
-	
-			btnFilterCategory.setText(getString(R.string.incident_filter_category)+" "+catDetails.getCategoryTitle());
-			
+		String thumbnails[];
+		Drawable d = null;
+		if (cursor.moveToFirst()) {
+			int idIndex = cursor
+					.getColumnIndexOrThrow(BoskoiDatabase.INCIDENT_ID);
+			int titleIndex = cursor
+					.getColumnIndexOrThrow(BoskoiDatabase.INCIDENT_TITLE);
+			int dateIndex = cursor
+					.getColumnIndexOrThrow(BoskoiDatabase.INCIDENT_DATE);
+			int verifiedIndex = cursor
+					.getColumnIndexOrThrow(BoskoiDatabase.INCIDENT_VERIFIED);
+			int locationIndex = cursor
+					.getColumnIndexOrThrow(BoskoiDatabase.INCIDENT_LOC_NAME);
+
+			int descIndex = cursor
+					.getColumnIndexOrThrow(BoskoiDatabase.INCIDENT_DESC);
+
+			int categoryIndex = cursor
+					.getColumnIndexOrThrow(BoskoiDatabase.INCIDENT_CATEGORIES);
+
+			int mediaIndex = cursor
+					.getColumnIndexOrThrow(BoskoiDatabase.INCIDENT_MEDIA);
+
+			int latitudeIndex = cursor
+					.getColumnIndexOrThrow(BoskoiDatabase.INCIDENT_LOC_LATITUDE);
+
+			int longitudeIndex = cursor
+					.getColumnIndexOrThrow(BoskoiDatabase.INCIDENT_LOC_LONGITUDE);
+
+			do {
+
+				IncidentsData incidentData = new IncidentsData();
+				mOldIncidents.add(incidentData);
+
+				int id = Util.toInt(cursor.getString(idIndex));
+				incidentData.setIncidentId(id);
+				incidentData.setIncidentLocLatitude(cursor
+						.getString(latitudeIndex));
+				incidentData.setIncidentLocLongitude(cursor
+						.getString(longitudeIndex));
+				title = Util.capitalizeString(cursor.getString(titleIndex));
+				incidentData.setIncidentTitle(title);
+
+				description = cursor.getString(descIndex);
+				incidentData.setIncidentDesc(description);
+
+				categories = cursor.getString(categoryIndex);
+				incidentData.setIncidentCategories(categories);
+
+				location = cursor.getString(locationIndex);
+				incidentData.setIncidentLocation(location);
+
+				// TODO format the date to the appropriate format
+				date = Util.formatDate("yyyy-MM-dd hh:mm:ss",
+						cursor.getString(dateIndex),
+						"MMMM dd, yyyy 'at' hh:mm:ss aaa");
+
+				incidentData.setIncidentDate(date);
+
+				media = cursor.getString(mediaIndex);
+				incidentData.setIncidentMedia(media);
+				thumbnails = media.split(",");
+
+				// TODO make the string readable from the string resource
+				status = Util.toInt(cursor.getString(verifiedIndex)) == 0 ? "Unverified"
+						: "Verified";
+				incidentData.setIncidentVerified(Util.toInt(cursor
+						.getString(verifiedIndex)));
+
+				// TODO do a proper check for thumbnails
+				d = ImageManager.getImages(thumbnails[0]);
+
+				// get full category names from db based on the id's found in
+				// the incident (disregard original title)
+
+				CategoriesData[] catdata = BoskoiService.getCategoriesDetails(
+						incidentData.getIncidentCategories(),
+						BoskoiService.language);
+				String categ = "";
+				int i = 0;
+				for (CategoriesData cate : catdata) {
+					if (i > 0) {
+						categ = categ + ", ";
+					}
+					categ = categ + cate.getCategoryTitle();
+					i++;
+				}
+				title = categ;
+
+				ila.addItem(new ListIncidentText(d == null ? getResources()
+						.getDrawable(R.drawable.boskoi_report_icon) : d, title,
+						date, status, description, location, media, categories,
+						id, getResources().getDrawable(R.drawable.boskoi_arrow)));
+
+			} while (cursor.moveToNext());
+		}
+
+		// remove old list in case no results are found. Inform the user with
+		// some toast
+		if (cursor.getCount() == 0 && !by.equals("All")) {
+			ila.removeItems();
+			Toast.makeText(this.getBaseContext(),
+					R.string.report_not_found_for_category, Toast.LENGTH_SHORT)
+					.show();
+		}
+
+		cursor.close();
+
+		ila.notifyDataSetChanged();
+
+		// prevent the list from not loading on page 0
+		if (page == 0) {
+			listIncidents.setSelection(0);
+		}
+
+		// set the filtered by string (convert the by id to string)
+
+		CategoriesData catDetails = new CategoriesData();
+
+		if (!by.equals("All")) {
+			CategoriesData[] cats = BoskoiService.getCategoriesDetails(by,
+					BoskoiService.language);
+			catDetails = cats[0];
+		} else {
+			catDetails.setCategoryTitle("All");
+		}
+
+		btnFilterCategory.setText(getString(R.string.incident_filter_category)
+				+ " " + catDetails.getCategoryTitle());
+
 	}
-  
-  
+
 	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+	protected void onActivityResult(int requestCode, int resultCode,
+			Intent intent) {
 		super.onActivityResult(requestCode, resultCode, intent);
 	}
-	
-	 
-    public class ImageAdapter extends BaseAdapter {
-    	
-    	public Vector<Drawable> mImageIds;
-    	private Context mContext;
-    	private int mGalleryItemBackground;
-    	
-    	public ImageAdapter( Context context ){
-    		mContext = context;
-    		mImageIds = new Vector<Drawable>();
-    	//	Log.i("image","adapter");
 
-    		// styling does not work in this context
-//    		TypedArray a = obtainStyledAttributes(R.styleable.PhotoGallery);
-//            mGalleryItemBackground = a.getResourceId(
-//                    R.styleable.PhotoGallery_android_galleryItemBackground, 0);
-//            a.recycle();		
-    	}
-    	
-    	public int getCount() {
-    		return mImageIds.size();
+	public class ImageAdapter extends BaseAdapter {
+
+		public Vector<Drawable> mImageIds;
+		private Context mContext;
+		private int mGalleryItemBackground;
+
+		public ImageAdapter(Context context) {
+			mContext = context;
+			mImageIds = new Vector<Drawable>();
+			// Log.i("image","adapter");
+
+			// styling does not work in this context
+			// TypedArray a = obtainStyledAttributes(R.styleable.PhotoGallery);
+			// mGalleryItemBackground = a.getResourceId(
+			// R.styleable.PhotoGallery_android_galleryItemBackground, 0);
+			// a.recycle();
+		}
+
+		public int getCount() {
+			return mImageIds.size();
 		}
 
 		public Object getItem(int position) {
@@ -707,16 +774,16 @@ public class ListIncidents extends Activity
 
 		public View getView(int position, View convertView, ViewGroup parent) {
 			ImageView i = new ImageView(mContext);
-			i.setImageDrawable( mImageIds.get( position ) );
-			
+			i.setImageDrawable(mImageIds.get(position));
+
 			i.setScaleType(ImageView.ScaleType.FIT_START);
 			i.setLayoutParams(new Gallery.LayoutParams(136, 88));
-            
-            // The preferred Gallery item background
-            i.setBackgroundResource(mGalleryItemBackground);
+
+			// The preferred Gallery item background
+			i.setBackgroundResource(mGalleryItemBackground);
 
 			return i;
 		}
-		
-    }
+
+	}
 }
