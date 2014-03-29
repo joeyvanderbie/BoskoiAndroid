@@ -74,7 +74,7 @@ class Eula {
         final SharedPreferences preferences = activity.getSharedPreferences(PREFERENCES_EULA,
                 Activity.MODE_PRIVATE);
 
-        BoskoiService.tracker.trackPageView("/Eula");   
+        BoskoiService.trackPageView(activity, "/Eula");   
         //testcode for eala
         //preferences.edit().putBoolean(PREFERENCE_EULA_ACCEPTED, false).commit();
         //end testcode

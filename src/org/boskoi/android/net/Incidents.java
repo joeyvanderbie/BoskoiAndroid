@@ -34,7 +34,7 @@ public class Incidents {
 	
 	
 	public static boolean getAllIncidentsFromWeb(String sinceDate) throws IOException {
-        BoskoiService.tracker.trackPageView("/Incidents/IncidentsFromWeb");
+        BoskoiService.trackPageView("/Incidents/IncidentsFromWeb");
 		
 		HttpResponse response;
 		String incidents = "";
@@ -66,7 +66,7 @@ public class Incidents {
 		
 	}	
 	public static boolean getDeletedIncidentsFromWeb(String sinceDate) throws IOException {
-        BoskoiService.tracker.trackPageView("/Incidents/DeletedIncidentsFromWeb");
+        BoskoiService.trackPageView("/Incidents/DeletedIncidentsFromWeb");
 		
 		HttpResponse response;
 		String incidents = "";

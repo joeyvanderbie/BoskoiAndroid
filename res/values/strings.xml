@@ -211,7 +211,7 @@ Before starting please read the following information.</string>
 	<string name="license_title">Boskoi is Open Source</string>
 	<string name="license">Boskoi is licensed under the LGPL v3 license. More information on <a href="http://www.boskoi.org/open">http://www.boskoi.org/open</a></string>
 	<string name="privacy_title">Privacy</string>
-	<string name="privacy_info">We use Google Analytics to improve our application, read what this implies on <a href="http://www.google.com/intl/en_uk/analytics/tos.html">http://goo.gl/2EXSr</a>. A version without Analytics can be provided on request</string>
+	<string name="privacy_info">We use Google Analytics to improve our application, read what this implies on <a href="http://www.google.com/intl/en_uk/analytics/tos.html">http://goo.gl/2EXSr</a>. It can be turned of in the About screen</string>
 	<string name="thankyou">Thank you for taking the time to read our rules, if you accept our terms you are free to enjoy the fruits of the world!</string>
 	
 	
@@ -246,7 +246,8 @@ Before starting please read the following information.</string>
 	<string name="privacy">Privacy\n\n
 For improving our application we log user behavior using Google Analytics.\n\n
 This logging is stored on the Google Analytics server and is used privately, we do not share this information with other parties! The Google Analytics usage license can be found on: \n <a href="http://www.google.com/intl/en_uk/analytics/tos.html">http://www.google.com/intl/en_uk/analytics/tos.html</a>\n\n
-You should note that the analytics currently can not be turned off. If you do not want us to log your behavior please inform us and we will supply you with a version which does not log your behavior.</string>
+You should note that the analytics can be turned off by turning the switch presented bellow</string>
+<string name="analytics_label">Google Analytics is currently </string>
 	
 	<string name="blogBtn">Show latest news posts</string>
 	<string name="loadingBlog">Loading News</string>

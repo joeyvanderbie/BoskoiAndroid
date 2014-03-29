@@ -32,7 +32,7 @@ import android.util.Log;
 public class Categories {
 	
 	public static boolean getAllCategoriesFromWeb() throws IOException {
-        BoskoiService.tracker.trackPageView("/Categories/CategoriesFromWeb");
+        BoskoiService.trackPageView("/Categories/CategoriesFromWeb");
 		HttpResponse response;
 		String categories = "";
 		
@@ -59,7 +59,7 @@ public class Categories {
 	}
 
 	public static boolean getAllCategoriesLangFromWeb() throws IOException {
-        BoskoiService.tracker.trackPageView("/Categories/CategoriesLangFromWeb");
+        BoskoiService.trackPageView("/Categories/CategoriesLangFromWeb");
 		HttpResponse response;
 		String categories = "";
 		

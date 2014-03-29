@@ -120,17 +120,46 @@
 					android:textStyle="bold"
 					android:text="@string/privacyBtn" android:gravity="left"/>	
 							
- 			<TextView android:id="@+id/privacy"
+ 		    <LinearLayout 
+ 		        android:id="@+id/privacy"
  				android:visibility="gone"
+        		android:layout_width="fill_parent"
+        		android:layout_height="wrap_content"
+        		android:orientation="vertical"
+        		android:layout_alignParentLeft="true"
+        		android:layout_marginLeft="0px"
+        		android:layout_marginTop="10px"
+        		android:layout_gravity="center">
+ 		    
+ 			<TextView android:id="@+id/privacy_text"
         		android:layout_width="fill_parent"
         		android:layout_height="wrap_content"
         		android:textColor="@drawable/date_color"
         		android:textStyle="bold"
-        		android:layout_alignParentLeft="true"
-        		android:layout_marginLeft="0px"
-        		android:layout_marginTop="10px"
-        		android:text="@string/privacy" android:layout_gravity="center"/>
+        		android:text="@string/privacy" />
         		
+	 			 <LinearLayout 
+	        		android:layout_width="fill_parent"
+	        		android:layout_height="wrap_content"
+	        		android:orientation="horizontal"
+	        		android:layout_marginTop="30px">
+		 			<TextView android:id="@+id/privacy_analytics"
+		        		android:layout_width="wrap_content"
+		        		android:layout_height="wrap_content"
+		        		android:textColor="@drawable/date_color"
+		        		android:textStyle="bold"
+		        		android:text="@string/analytics_label"
+		        		android:layout_weight="1"/>
+
+		 			<ToggleButton
+		 			    android:id="@+id/analytics_toggle"
+		 			    android:layout_width="wrap_content"
+		 			    android:layout_height="wrap_content"
+		 			    android:text="ToggleButton" 
+		 			    android:checked="true"/>
+		 			    
+	 			</LinearLayout>
+ 			</LinearLayout>
         	<View android:layout_width="fill_parent" android:layout_marginTop="10px" android:layout_height="2dip" android:background="#FF000000" /> 
  		    
  		     		

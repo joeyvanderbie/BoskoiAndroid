@@ -81,6 +81,7 @@ public class BoskoiService extends Service {
 	public static long blogLastUpdate = 0;
 	public static String lastUpdate = "1970-01-01 00:00:00"; // default value
 	public static long updateInterval = 24 * 60 * 60 * 1000; // currently 24
+	public static boolean trackerOn = true;
 	// hours
 	public static Locale language = Locale.getDefault();
 	public static int numberOfNewReports = 0;
@@ -260,6 +261,7 @@ public class BoskoiService extends Service {
 		language = new Locale(settings.getString("Language", language.getLanguage()), settings.getString("LanguageCountry", language.getCountry()));
 		lastVersion = settings.getString("LastVersion", "");
 		blogLastUpdate = settings.getLong("BlogLastUpdate", 0);
+		trackerOn = settings.getBoolean("AnalyticsTracker", true);
 
 		// make sure folder exists
 		final File dir = new File(BoskoiService.savePath);
@@ -298,6 +300,8 @@ public class BoskoiService extends Service {
 		editor.putString("Username", username);
 		editor.putString("Password", password);
 		editor.putLong("BlogLastUpdate", blogLastUpdate);
+		editor.putBoolean("AnalyticsTracker", trackerOn);
+
 		editor.commit();
 	}
 
@@ -517,15 +521,30 @@ public class BoskoiService extends Service {
 	}
 
 	public static void trackPageView(Context context, String page) {
-		if (tracker == null) {
-			startTracker(context);
+		if(trackerOn){
+			if (tracker == null) {
+				startTracker(context);
+			}
+	
+			try {
+				tracker.trackPageView(page);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
-
-		try {
-			tracker.trackPageView(page);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+	}
+	
+	public static void trackPageView(String page) {
+		if(trackerOn){
+			if(tracker != null){
+				try {
+					tracker.trackPageView(page);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 		}
 	}
 
@@ -534,8 +553,15 @@ public class BoskoiService extends Service {
 		// tracker.start("UA-18696504-1", this);
 		// ...alternatively, the tracker can be started with a dispatch interval
 		// (in seconds).
-		tracker = GoogleAnalyticsTracker.getInstance();
-		tracker.start("UA-18696504-1", 300, context);
+		if(trackerOn){
+			tracker = GoogleAnalyticsTracker.getInstance();
+			tracker.start("UA-18696504-1", 300, context);
+		}
+	}
+	
+	public static void turnTrackerOn(boolean on, Context context){
+		trackerOn = on;
+		saveSettings(context);
 	}
 
 	private Typeface loadFont(String path) {

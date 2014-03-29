@@ -35,7 +35,9 @@ import android.os.Bundle;
 import android.text.util.Linkify;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 
 public class About extends Activity {
@@ -66,7 +68,7 @@ public class About extends Activity {
  
         Linkify.addLinks((TextView) findViewById(R.id.intro), Linkify.ALL);
         Linkify.addLinks((TextView) findViewById(R.id.lgpl), Linkify.ALL);
-        Linkify.addLinks((TextView) findViewById(R.id.privacy), Linkify.ALL);
+        Linkify.addLinks((TextView) findViewById(R.id.privacy_text), Linkify.ALL);
         
         final Button eulaBtn = (Button) findViewById(R.id.eulaBtn);
         eulaBtn.setOnClickListener( new View.OnClickListener() {
@@ -102,7 +104,7 @@ public class About extends Activity {
         privacyBtn.setOnClickListener( new View.OnClickListener() {
             public void onClick(View v) {
             	
-                TextView privacyText = (TextView)findViewById(R.id.privacy);
+                LinearLayout privacyText = (LinearLayout)findViewById(R.id.privacy);
                 if(privacyText.getVisibility() == View.GONE){
                 	privacyText.setVisibility(View.VISIBLE);
                 	privacyBtn.setText("Hide privacy information");
@@ -113,7 +115,16 @@ public class About extends Activity {
 ;            }
         });  
   
-       
+        
+        final ToggleButton trackerToggle = (ToggleButton) findViewById(R.id.analytics_toggle);
+        trackerToggle.setChecked(BoskoiService.trackerOn);
+        trackerToggle.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				BoskoiService.turnTrackerOn(trackerToggle.isChecked(), About.this);
+			}
+		});
         
 	}
 	
